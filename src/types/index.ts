@@ -1,10 +1,10 @@
 
 export interface TarotCard {
   id: number;
-  name: string;
-  meaning_up: string;
-  meaning_rev: string;
-  desc: string;
+  name: string; // Translation Key
+  meaning_up: string; // Translation Key
+  meaning_rev: string; // Translation Key
+  desc: string; // Translation Key
   yesNo: 'Yes' | 'No' | 'Maybe';
   imageName?: string; // e.g., "the-fool" to derive placeholder hint
   imageUrl?: string; // Optional URL for the card's image
@@ -35,3 +35,4 @@ export interface SavedReading {
   aiInterpretation?: string;
   timestamp: number;
 }
+

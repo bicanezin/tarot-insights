@@ -16,7 +16,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 interface AIInterpretationProps {
   spread: SpreadType; // spread.name and spread.positions are now keys
-  drawnCards: DrawnCardType[]; // drawnCard.positionName is now a key
+  drawnCards: DrawnCardType[]; // drawnCard.positionName is now a key, card properties are keys
   userName: string;
   readingDate: string;
   customDetails: string;
@@ -42,7 +42,7 @@ export function AIInterpretation({
 
   const handleGenerateInterpretation = async () => {
     if (drawnCards.length < spread.cardCount) {
-        toast({ title: "Incomplete Spread", description: "Please draw all cards for the spread before generating an interpretation.", variant: "destructive" });
+        toast({ title: t('errorSavingReading' as TranslationKeys), description: "Please draw all cards for the spread before generating an interpretation.", variant: "destructive" });
         return;
     }
     if (!userName || !readingDate) {
@@ -68,20 +68,19 @@ export function AIInterpretation({
       drawnCards: drawnCards.map(dc => ({
         card: {
           id: dc.card.id,
-          name: dc.card.name, // Card name is already a display string
-          meaning_up: dc.card.meaning_up,
-          meaning_rev: dc.card.meaning_rev,
-          desc: dc.card.desc,
-          yesNo: dc.card.yesNo,
+          name: t(dc.card.name as TranslationKeys), 
+          meaning_up: t(dc.card.meaning_up as TranslationKeys),
+          meaning_rev: t(dc.card.meaning_rev as TranslationKeys),
+          desc: t(dc.card.desc as TranslationKeys),
+          yesNo: dc.card.yesNo, // Pass Yes/No as is (expected by AI schema)
         },
         isReversed: dc.isReversed,
-        // Note: The AI prompt uses @index for position, not the name directly from drawnCards.
-        // So, passing translated position names within the spread object is key.
       })),
       userName: userName,
       readingDate: readingDate,
       customDetails: customDetails || undefined,
       language: locale,
+      isPortuguese: locale === 'pt', // Explicitly pass based on current locale
     };
 
     try {
