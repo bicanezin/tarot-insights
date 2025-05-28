@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
 import { Heart, Briefcase, TrendingUp, HelpCircle, Sparkles } from 'lucide-react'; // Added Sparkles
 import type { Spread } from '@/types';
 import { spreads as allSpreads } from '@/constants/spreads'; // Ensure this path is correct
@@ -36,15 +37,22 @@ export default function HomePage() {
         {categories.map((category) => {
           const Icon = categoryIcons[category];
           const categorySpreads = allSpreads.filter(s => s.category === category);
+          
+          const categoryTitleKey = `category${category.replace('/', '')}` as TranslationKeys;
+
+          const spreadsCount = categorySpreads.length;
+          const spreadsAvailableTextKey = spreadsCount === 1 ? 'spreadsAvailable_one' : 'spreadsAvailable_many';
+          const spreadsAvailableText = t(spreadsAvailableTextKey as TranslationKeys, { count: spreadsCount });
+
           return (
             <Card key={category} className="hover:shadow-xl transition-shadow duration-300">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-2xl font-serif-display font-medium">{t(`category${category.replace('/', '')}` as any)}</CardTitle>
+                <CardTitle className="text-2xl font-serif-display font-medium">{t(categoryTitleKey)}</CardTitle>
                 <Icon className="h-6 w-6 text-primary" />
               </CardHeader>
               <CardContent>
                 <CardDescription className="mb-4">
-                  {categorySpreads.length} {categorySpreads.length === 1 ? "spread" : "spreads"} available.
+                  {spreadsAvailableText}
                 </CardDescription>
                 <Link href={`/reading?category=${category.toLowerCase().replace('/', '')}`} passHref>
                   <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
@@ -59,3 +67,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+    

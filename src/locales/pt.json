@@ -52,6 +52,8 @@
   "textYes": "Sim",
   "textNo": "Não",
   "textMaybe": "Talvez",
+  "spreadsAvailable_one": "{{count}} método disponível.",
+  "spreadsAvailable_many": "{{count}} métodos disponíveis.",
 
   "errorSpreadNotFound": "Método Não Encontrado",
   "errorSavingReadingDescription": "Por favor, forneça nome, data e certifique-se de que todas as cartas foram tiradas.",

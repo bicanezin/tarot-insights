@@ -52,6 +52,8 @@
   "textYes": "Yes",
   "textNo": "No",
   "textMaybe": "Maybe",
+  "spreadsAvailable_one": "{{count}} spread available.",
+  "spreadsAvailable_many": "{{count}} spreads available.",
 
   "errorSpreadNotFound": "Spread Not Found",
   "errorSavingReadingDescription": "Please provide name, date, and ensure all cards are drawn.",
