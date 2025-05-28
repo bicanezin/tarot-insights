@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { cn } from '@/lib/utils';
 import { getLayoutConfig, CardPositionStyle } from '@/constants/spreadLayouts';
 import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
 import { ArrowDownUp, Shuffle } from 'lucide-react';
 
 interface SpreadDisplayProps {
@@ -27,7 +28,7 @@ interface SpreadDisplayProps {
 export function SpreadDisplay({
   spread,
   drawnCards,
-  onCardDraw, // This might be deprecated if we move to pick-from-deck model fully
+  onCardDraw, 
   onShuffleAndDrawAll,
   isDrawingMode,
   drawingForPosition,
@@ -40,15 +41,16 @@ export function SpreadDisplay({
   const layoutConfig = getLayoutConfig(spread.layoutType, spread.cardCount);
 
   const getCardForPosition = (index: number): DrawnCard | undefined => {
+    // spread.positions[index] is now a key
     return drawnCards.find(dc => dc.positionName === spread.positions[index]);
   };
 
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle className="font-serif-display text-2xl">{t(spread.name as any) || spread.name}</CardTitle>
+        <CardTitle className="font-serif-display text-2xl">{t(spread.name as TranslationKeys)}</CardTitle>
         <CardDescription>
-          {spread.cardCount} {t('card', {count: spread.cardCount})} - {t(`category${spread.category.replace('/', '')}` as any)}
+          {spread.cardCount} {t('card', {count: spread.cardCount})} - {t(\`category\${spread.category.replace('/', '')}\` as any)}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -59,7 +61,7 @@ export function SpreadDisplay({
         )}
 
         <div className={cn("transition-all duration-500 ease-in-out", layoutConfig.containerClassName)}>
-          {spread.positions.map((positionName, index) => {
+          {spread.positions.map((positionNameKey, index) => { // positionNameKey is the translation key
             const drawnCardData = getCardForPosition(index);
             const positionStyle = layoutConfig.cardPositions[index] || {};
             
@@ -71,15 +73,16 @@ export function SpreadDisplay({
                   "flex flex-col items-center justify-center space-y-2 p-2 rounded-lg",
                   isDrawingMode && drawingForPosition === index && "ring-2 ring-primary shadow-lg bg-primary/10",
                   !drawnCardData && isDrawingMode && "cursor-pointer hover:bg-accent/20",
-                  "min-h-[280px] md:min-h-[320px]" // Ensure placeholders have height
+                  "min-h-[280px] md:min-h-[320px]" 
                 )}
                 onClick={() => !drawnCardData && isDrawingMode && onSelectPositionToDraw(index)}
               >
                 <p className="text-xs text-center font-semibold text-muted-foreground h-8">
-                  {index + 1}. {t(positionName as any) || positionName}
+                  {index + 1}. {t(positionNameKey as TranslationKeys)}
                 </p>
                 {drawnCardData ? (
-                  <DrawnCardView drawnCardData={drawnCardData} positionName={t(positionName as any) || positionName} />
+                  // Pass the key to DrawnCardView, it will translate it
+                  <DrawnCardView drawnCardData={drawnCardData} positionName={positionNameKey} />
                 ) : (
                   <div className="w-[120px] h-[200px] md:w-[150px] md:h-[250px]">
                      <CardBack 
@@ -98,7 +101,7 @@ export function SpreadDisplay({
         {isDrawingMode && drawingForPosition !== null && (
           <Card className="mt-6 p-4 bg-muted/50">
             <h3 className="text-lg font-semibold mb-2 text-center">
-              {t('pickACardFor', { positionName: t(spread.positions[drawingForPosition] as any) || spread.positions[drawingForPosition] })}
+              {t('pickACardFor', { positionName: t(spread.positions[drawingForPosition] as TranslationKeys) })}
             </h3>
             <div className="flex flex-nowrap overflow-x-auto gap-3 p-2 scrollbar-thin scrollbar-thumb-primary/50 scrollbar-track-muted">
               {availableDeck.map((card) => (

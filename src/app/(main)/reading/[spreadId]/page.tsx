@@ -8,11 +8,12 @@ import { useToast } from '@/hooks/use-toast';
 import { UserInfoForm } from '@/components/reading/UserInfoForm';
 import { SpreadDisplay } from '@/components/reading/SpreadDisplay';
 import { AIInterpretation } from '@/components/reading/AIInterpretation';
-import { getSpreadById } from '@/constants/spreads'; // Corrected import
+import { getSpreadById } from '@/constants/spreads'; 
 import { fullTarotDeck } from '@/constants/tarotDeck';
 import type { Spread as SpreadType, TarotCard, DrawnCard, SavedReading } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations'; // Import TranslationKeys
 import { Loader2, Save, ArrowLeft } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -61,7 +62,7 @@ export default function ReadingPage() {
       setAiInterpretation('');
       setDrawingForPosition(0); // Start by drawing for the first position
     } else {
-      toast({ title: "Spread not found", variant: "destructive" });
+      toast({ title: "Spread not found", variant: "destructive" }); // Consider translating "Spread not found"
       router.push('/reading'); // Redirect if spread is invalid
     }
     setIsLoading(false);
@@ -80,33 +81,27 @@ export default function ReadingPage() {
     if (!spread || drawingForPosition === null) return;
 
     const isReversed = Math.random() < 0.3; // 30% chance of being reversed
-    const positionName = spread.positions[drawingForPosition];
+    const positionNameKey = spread.positions[drawingForPosition]; // This is now a key
     
     const newDrawnCard: DrawnCard = {
       card: selectedCard,
       isReversed,
-      positionName,
+      positionName: positionNameKey, // Store the key
     };
 
     setDrawnCards(prev => [...prev, newDrawnCard]);
     setCurrentDeck(prev => prev.filter(card => card.id !== selectedCard.id)); // Remove card from available deck
 
-    // Move to next position or end drawing mode
     if (drawnCards.length + 1 < spread.cardCount) {
-      // Find next available undrawn position
       let nextPos = (drawingForPosition + 1) % spread.cardCount;
       while(drawnCards.some(dc => dc.positionName === spread.positions[nextPos]) || (nextPos === drawingForPosition && drawnCards.length +1 < spread.cardCount) ){
           nextPos = (nextPos +1 ) % spread.cardCount;
-          // safety break for infinite loop, though logic should prevent it
           if (nextPos === drawingForPosition && drawnCards.some(dc => dc.positionName === spread.positions[nextPos])) break;
       }
-       // If all cards are drawn, nextPos might point to an already drawn card if it's the last one.
-      // Or if only one card remains, check if it is the one.
       if (drawnCards.length + 1 < spread.cardCount && !drawnCards.some(dc => dc.positionName === spread.positions[nextPos])) {
         setDrawingForPosition(nextPos);
       } else {
-        // find first available
-        const firstAvailable = spread.positions.findIndex((p,idx)=> !drawnCards.some(dc=>dc.positionName === p) && idx !== drawingForPosition);
+        const firstAvailable = spread.positions.findIndex((pKey,idx)=> !drawnCards.some(dc=>dc.positionName === pKey) && idx !== drawingForPosition);
         if(firstAvailable !== -1){
             setDrawingForPosition(firstAvailable);
         } else {
@@ -127,16 +122,16 @@ export default function ReadingPage() {
     const deckCopy = [...shuffled];
 
     for (let i = 0; i < spread.cardCount; i++) {
-      if (deckCopy.length === 0) break; // Should not happen with a full deck
+      if (deckCopy.length === 0) break; 
       const card = deckCopy.pop()!;
       newDrawn.push({
         card,
-        isReversed: Math.random() < 0.3, // 30% chance reversed
-        positionName: spread.positions[i],
+        isReversed: Math.random() < 0.3, 
+        positionName: spread.positions[i], // Store the key
       });
     }
     setDrawnCards(newDrawn);
-    setCurrentDeck(deckCopy); // Update remaining deck
+    setCurrentDeck(deckCopy); 
     setIsDrawingMode(false);
     setDrawingForPosition(null);
   }, [spread]);
@@ -144,11 +139,11 @@ export default function ReadingPage() {
 
   const handleSaveReading = () => {
     if (!spread || !userName || !readingDate) {
-      toast({ title: "Missing Information", description: "Please provide name, date, and ensure all cards are drawn.", variant: "destructive" });
+      toast({ title: t('errorSavingReading' as TranslationKeys), description: "Please provide name, date, and ensure all cards are drawn.", variant: "destructive" }); // Consider translating description
       return;
     }
     if (drawnCards.length < spread.cardCount) {
-      toast({ title: "Incomplete Reading", description: "Please draw all cards for the spread.", variant: "destructive" });
+      toast({ title: "Incomplete Reading", description: "Please draw all cards for the spread.", variant: "destructive" }); // Consider translating title & description
       return;
     }
 
@@ -157,8 +152,8 @@ export default function ReadingPage() {
       userName,
       readingDate,
       customDetails,
-      spread,
-      drawnCards,
+      spread, // spread still contains keys for name and positions
+      drawnCards, // drawnCards now contain positionName as a key
       aiInterpretation,
       timestamp: Date.now(),
     };
@@ -183,7 +178,7 @@ export default function ReadingPage() {
       </Button>
 
       <h1 className="text-3xl font-bold tracking-tight text-center font-serif-display">
-        {t(spread.name as any) || spread.name}
+        {t(spread.name as TranslationKeys)}
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -191,7 +186,7 @@ export default function ReadingPage() {
            <SpreadDisplay
             spread={spread}
             drawnCards={drawnCards}
-            onCardDraw={() => {}} // Legacy, main drawing through pick
+            onCardDraw={() => {}} 
             onShuffleAndDrawAll={handleShuffleAndDrawAll}
             isDrawingMode={isDrawingMode}
             drawingForPosition={drawingForPosition}
@@ -218,8 +213,8 @@ export default function ReadingPage() {
           <Separator />
 
           <AIInterpretation
-            spread={spread}
-            drawnCards={drawnCards}
+            spread={spread} // Pass spread with keys
+            drawnCards={drawnCards} // Pass drawnCards with keys
             userName={userName}
             readingDate={readingDate}
             customDetails={customDetails}
@@ -237,4 +232,3 @@ export default function ReadingPage() {
     </div>
   );
 }
-

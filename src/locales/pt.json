@@ -1,3 +1,4 @@
+
 {
   "appName": "Intuições do Tarot",
   "navNewReading": "Nova Leitura",
@@ -46,5 +47,47 @@
   "delete": "Excluir",
   "language": "Idioma",
   "english": "Inglês",
-  "portuguese": "Português"
+  "portuguese": "Português",
+
+  "spread_yn1_name": "Resposta Rápida",
+  "spread_yn1_pos_0": "A Resposta",
+
+  "spread_yn2_name": "Situação e Resultado",
+  "spread_yn2_pos_0": "A Situação",
+  "spread_yn2_pos_1": "O Obstáculo",
+  "spread_yn2_pos_2": "O Provável Resultado",
+
+  "spread_l1_name": "Check-in do Relacionamento",
+  "spread_l1_pos_0": "Você",
+  "spread_l1_pos_1": "Seu Parceiro(a)",
+  "spread_l1_pos_2": "O Relacionamento",
+
+  "spread_l2_name": "Encontrando um Novo Amor",
+  "spread_l2_pos_0": "Sua Prontidão",
+  "spread_l2_pos_1": "O Que Você Busca",
+  "spread_l2_pos_2": "Um Obstáculo",
+  "spread_l2_pos_3": "Caminho para o Amor",
+  "spread_l2_pos_4": "Futuro Potencial",
+
+  "spread_p1_name": "Caminho de Carreira",
+  "spread_p1_pos_0": "Seu Papel Atual",
+  "spread_p1_pos_1": "Seu Potencial",
+  "spread_p1_pos_2": "Conselho para Crescimento",
+
+  "spread_p2_name": "Sucesso do Projeto",
+  "spread_p2_pos_0": "Fundação do Projeto",
+  "spread_p2_pos_1": "Pontos Fortes",
+  "spread_p2_pos_2": "Desafios",
+  "spread_p2_pos_3": "Resultado Final",
+
+  "spread_f1_name": "Retrato Financeiro",
+  "spread_f1_pos_0": "Estado Financeiro Atual",
+  "spread_f1_pos_1": "O Que Está Ajudando",
+  "spread_f1_pos_2": "O Que Está Atrapalhando",
+
+  "spread_f2_name": "Crescimento de Riqueza",
+  "spread_f2_pos_0": "Sua Mentalidade Financeira",
+  "spread_f2_pos_1": "Oportunidade de Crescimento",
+  "spread_f2_pos_2": "Ação a Tomar",
+  "spread_f2_pos_3": "Potencial de Longo Prazo"
 }

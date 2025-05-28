@@ -7,13 +7,14 @@ import { TarotCardImage } from '@/components/shared/TarotCardImage';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface DrawnCardViewProps {
   drawnCardData: DrawnCard;
-  positionName: string;
-  showFullDetails?: boolean; // To control if meanings are initially expanded
+  positionName: string; // This will now be a translation key
+  showFullDetails?: boolean; 
 }
 
 export function DrawnCardView({ drawnCardData, positionName, showFullDetails = false }: DrawnCardViewProps) {
@@ -31,7 +32,7 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
   return (
     <Card className="w-full overflow-hidden">
       <CardHeader className="p-4">
-        <UiCardDescription className="text-sm text-muted-foreground">{positionName}</UiCardDescription>
+        <UiCardDescription className="text-sm text-muted-foreground">{t(positionName as TranslationKeys)}</UiCardDescription>
         <CardTitle className="font-serif-display text-xl">{card.name}</CardTitle>
       </CardHeader>
       <CardContent className="p-4 space-y-4">

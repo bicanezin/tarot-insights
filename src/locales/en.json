@@ -1,3 +1,4 @@
+
 {
   "appName": "Tarot Insights",
   "navNewReading": "New Reading",
@@ -46,5 +47,47 @@
   "delete": "Delete",
   "language": "Language",
   "english": "English",
-  "portuguese": "Portuguese"
+  "portuguese": "Portuguese",
+
+  "spread_yn1_name": "Quick Answer",
+  "spread_yn1_pos_0": "The Answer",
+
+  "spread_yn2_name": "Situation & Outcome",
+  "spread_yn2_pos_0": "The Situation",
+  "spread_yn2_pos_1": "The Obstacle",
+  "spread_yn2_pos_2": "The Likely Outcome",
+
+  "spread_l1_name": "Relationship Check-in",
+  "spread_l1_pos_0": "You",
+  "spread_l1_pos_1": "Your Partner",
+  "spread_l1_pos_2": "The Relationship",
+
+  "spread_l2_name": "Finding New Love",
+  "spread_l2_pos_0": "Your Readiness",
+  "spread_l2_pos_1": "What You Seek",
+  "spread_l2_pos_2": "An Obstacle",
+  "spread_l2_pos_3": "Path to Love",
+  "spread_l2_pos_4": "Potential Future",
+
+  "spread_p1_name": "Career Path",
+  "spread_p1_pos_0": "Your Current Role",
+  "spread_p1_pos_1": "Your Potential",
+  "spread_p1_pos_2": "Advice for Growth",
+
+  "spread_p2_name": "Project Success",
+  "spread_p2_pos_0": "Project Foundation",
+  "spread_p2_pos_1": "Strengths",
+  "spread_p2_pos_2": "Challenges",
+  "spread_p2_pos_3": "Final Outcome",
+
+  "spread_f1_name": "Financial Snapshot",
+  "spread_f1_pos_0": "Current Financial State",
+  "spread_f1_pos_1": "What is Helping",
+  "spread_f1_pos_2": "What is Hindering",
+
+  "spread_f2_name": "Wealth Growth",
+  "spread_f2_pos_0": "Your Money Mindset",
+  "spread_f2_pos_1": "Opportunity for Growth",
+  "spread_f2_pos_2": "Action to Take",
+  "spread_f2_pos_3": "Long-term Potential"
 }

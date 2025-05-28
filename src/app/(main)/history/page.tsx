@@ -10,6 +10,7 @@ import { DrawnCardView } from '@/components/reading/DrawnCardView';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
 import { Trash2, Eye, DownloadCloud } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
@@ -28,6 +29,8 @@ export default function HistoryPage() {
   const sortedReadings = [...savedReadings].sort((a, b) => b.timestamp - a.timestamp);
 
   const exportReadingToJson = (reading: SavedReading) => {
+    // When exporting, we might want to export translated values or keys.
+    // For simplicity now, it exports the raw data which includes keys.
     const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
       JSON.stringify(reading, null, 2)
     )}`;
@@ -48,7 +51,7 @@ export default function HistoryPage() {
           {sortedReadings.map((reading) => (
             <Card key={reading.id} className="flex flex-col">
               <CardHeader>
-                <CardTitle className="font-serif-display">{t(reading.spread.name as any) || reading.spread.name}</CardTitle>
+                <CardTitle className="font-serif-display">{t(reading.spread.name as TranslationKeys)}</CardTitle>
                 <CardDescription>
                   {reading.userName} - {new Date(reading.readingDate).toLocaleDateString()}
                 </CardDescription>
@@ -96,7 +99,7 @@ export default function HistoryPage() {
               <AlertDialogTitle className="font-serif-display text-2xl">{t('readingDetails')}</AlertDialogTitle>
               <AlertDialogDescription>
                 {selectedReading.userName} - {new Date(selectedReading.readingDate).toLocaleDateString()} <br/>
-                {t('spread')}: {t(selectedReading.spread.name as any) || selectedReading.spread.name}
+                {t('spread')}: {t(selectedReading.spread.name as TranslationKeys)}
               </AlertDialogDescription>
             </AlertDialogHeader>
             
@@ -106,7 +109,8 @@ export default function HistoryPage() {
                   <h3 className="text-lg font-semibold mb-2">{t('drawnCardsLabel')}</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {selectedReading.drawnCards.map((drawnCard, index) => (
-                      <DrawnCardView key={index} drawnCardData={drawnCard} positionName={t(drawnCard.positionName as any) || drawnCard.positionName} showFullDetails />
+                      // drawnCard.positionName is now a key
+                      <DrawnCardView key={index} drawnCardData={drawnCard} positionName={drawnCard.positionName} showFullDetails />
                     ))}
                   </div>
                 </div>

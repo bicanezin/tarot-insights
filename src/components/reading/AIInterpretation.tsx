@@ -5,18 +5,18 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Textarea } from '@/components/ui/textarea'; // Assuming you have this
 import { Loader2, Wand2 } from 'lucide-react';
 import { generateTarotReadingInterpretation, TarotReadingInput } from '@/ai/flows/ai-reading-assistant';
 import type { Spread as SpreadType, DrawnCard as DrawnCardType } from '@/types';
 import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
 import { useToast } from '@/hooks/use-toast';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 
 interface AIInterpretationProps {
-  spread: SpreadType;
-  drawnCards: DrawnCardType[];
+  spread: SpreadType; // spread.name and spread.positions are now keys
+  drawnCards: DrawnCardType[]; // drawnCard.positionName is now a key
   userName: string;
   readingDate: string;
   customDetails: string;
@@ -35,7 +35,7 @@ export function AIInterpretation({
 }: AIInterpretationProps) {
   const [interpretation, setInterpretation] = useState<string>(initialInterpretation);
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslations();
+  const { t } = useTranslations(); // t function is available here
   const { toast } = useToast();
   const { locale } = useLanguage();
 
@@ -53,24 +53,30 @@ export function AIInterpretation({
     setIsLoading(true);
     setInterpretation('');
 
+    // Translate spread name and positions before sending to AI
+    const translatedSpreadName = t(spread.name as TranslationKeys);
+    const translatedPositionNames = spread.positions.map(pKey => t(pKey as TranslationKeys));
+
     const aiInput: TarotReadingInput = {
       spread: {
         id: spread.id,
-        name: spread.name,
+        name: translatedSpreadName, // Pass translated name
         category: spread.category,
         cardCount: spread.cardCount,
-        positions: spread.positions,
+        positions: translatedPositionNames, // Pass translated positions
       },
       drawnCards: drawnCards.map(dc => ({
         card: {
           id: dc.card.id,
-          name: dc.card.name,
+          name: dc.card.name, // Card name is already a display string
           meaning_up: dc.card.meaning_up,
           meaning_rev: dc.card.meaning_rev,
           desc: dc.card.desc,
           yesNo: dc.card.yesNo,
         },
         isReversed: dc.isReversed,
+        // Note: The AI prompt uses @index for position, not the name directly from drawnCards.
+        // So, passing translated position names within the spread object is key.
       })),
       userName: userName,
       readingDate: readingDate,
