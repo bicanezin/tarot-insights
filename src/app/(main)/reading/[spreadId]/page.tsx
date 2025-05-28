@@ -8,7 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import { UserInfoForm } from '@/components/reading/UserInfoForm';
 import { SpreadDisplay } from '@/components/reading/SpreadDisplay';
 import { AIInterpretation } from '@/components/reading/AIInterpretation';
-import { getSpreadById }sert } from '@/constants/spreads'; // Corrected import
+import { getSpreadById } from '@/constants/spreads'; // Corrected import
 import { fullTarotDeck } from '@/constants/tarotDeck';
 import type { Spread as SpreadType, TarotCard, DrawnCard, SavedReading } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -237,3 +237,4 @@ export default function ReadingPage() {
     </div>
   );
 }
+
