@@ -72,7 +72,7 @@ const prompt = ai.definePrompt({
 
   Cards Drawn:
   {{#each drawnCards}}
-  - Position: {{{@index}}}, Card Name: {{{this.card.name}}}, Reversed: {{#if this.isReversed}}Yes{{else}}No{{/if}}, Meaning ({{#if this.isReversed}}Reversed{{else}}Upright{{/if}}): {{#if this.isReversed}}{{{this.card.meaning_rev}}}{{else}}{{{this.card.meaning_up}}}{{/if}}}
+  - Position: {{{@index}}}, Card Name: {{{this.card.name}}}, Reversed: {{#if this.isReversed}}Yes{{else}}No{{/if}}, Meaning ({{#if this.isReversed}}Reversed{{else}}Upright{{/if}}): {{#if this.isReversed}}{{{this.card.meaning_rev}}}{{else}}{{{this.card.meaning_up}}}{{/if}}
   {{/each}}
 
   Consider the relationships between the cards and the overall message of the spread.
@@ -114,3 +114,4 @@ const generateTarotReadingInterpretationFlow = ai.defineFlow(
     return output!;
   }
 );
+
