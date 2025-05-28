@@ -1,3 +1,4 @@
+
 // This is an auto-generated file from Firebase Studio.
 
 'use server';
@@ -42,6 +43,7 @@ const TarotReadingInputSchema = z.object({
   readingDate: z.string().describe('The date the tarot reading is taking place.'),
   customDetails: z.string().optional().describe('Any custom details provided by the user to be considered in the interpretation.'),
   language: z.enum(['en', 'pt']).default('en').describe('The language to be used for the interpretation (en: English, pt: Portuguese).'),
+  isPortuguese: z.boolean().optional().describe('Internal flag indicating if the language is Portuguese for template logic.'),
 });
 
 export type TarotReadingInput = z.infer<typeof TarotReadingInputSchema>;
@@ -53,7 +55,12 @@ const TarotReadingOutputSchema = z.object({
 export type TarotReadingOutput = z.infer<typeof TarotReadingOutputSchema>;
 
 export async function generateTarotReadingInterpretation(input: TarotReadingInput): Promise<TarotReadingOutput> {
-  return generateTarotReadingInterpretationFlow(input);
+  // Prepare input for the flow, including setting the isPortuguese flag
+  const flowInput: TarotReadingInput = {
+    ...input,
+    isPortuguese: input.language === 'pt',
+  };
+  return generateTarotReadingInterpretationFlow(flowInput);
 }
 
 const prompt = ai.definePrompt({
@@ -78,7 +85,7 @@ const prompt = ai.definePrompt({
   Consider the relationships between the cards and the overall message of the spread.
   Pay attention to the user details and custom details to make the interpretation more relevant.
 
-  {{#if (eq language 'pt')}}
+  {{#if isPortuguese}}
   Translate the interpretation to Portuguese.
   {{/if}}
   `,config: {
@@ -106,11 +113,13 @@ const prompt = ai.definePrompt({
 const generateTarotReadingInterpretationFlow = ai.defineFlow(
   {
     name: 'generateTarotReadingInterpretationFlow',
-    inputSchema: TarotReadingInputSchema,
+    inputSchema: TarotReadingInputSchema, // The flow externally receives the original schema
     outputSchema: TarotReadingOutputSchema,
   },
-  async input => {
-    const {output} = await prompt(input);
+  async (flowInput: TarotReadingInput) => {
+    // The prompt will receive the flowInput which now includes isPortuguese
+    // as set by the wrapper function generateTarotReadingInterpretation
+    const {output} = await prompt(flowInput);
     return output!;
   }
 );
