@@ -29,8 +29,6 @@ export default function HistoryPage() {
   const sortedReadings = [...savedReadings].sort((a, b) => b.timestamp - a.timestamp);
 
   const exportReadingToJson = (reading: SavedReading) => {
-    // When exporting, we might want to export translated values or keys.
-    // For simplicity now, it exports the raw data which includes keys.
     const jsonString = `data:text/json;charset=utf-8,${encodeURIComponent(
       JSON.stringify(reading, null, 2)
     )}`;
@@ -74,7 +72,10 @@ export default function HistoryPage() {
                       <AlertDialogHeader>
                         <AlertDialogTitle>{t('confirmDeleteReading')}</AlertDialogTitle>
                         <AlertDialogDescription>
-                          This action cannot be undone. This will permanently delete the reading for {reading.userName} on {new Date(reading.readingDate).toLocaleDateString()}.
+                          {t('confirmDeleteReadingDescription' as TranslationKeys, {
+                            userName: reading.userName,
+                            date: new Date(reading.readingDate).toLocaleDateString()
+                          })}
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter>
@@ -109,7 +110,6 @@ export default function HistoryPage() {
                   <h3 className="text-lg font-semibold mb-2">{t('drawnCardsLabel')}</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {selectedReading.drawnCards.map((drawnCard, index) => (
-                      // drawnCard.positionName is now a key
                       <DrawnCardView key={index} drawnCardData={drawnCard} positionName={drawnCard.positionName} showFullDetails />
                     ))}
                   </div>
@@ -146,3 +146,5 @@ export default function HistoryPage() {
     </div>
   );
 }
+
+    

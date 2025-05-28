@@ -13,7 +13,7 @@ import { fullTarotDeck } from '@/constants/tarotDeck';
 import type { Spread as SpreadType, TarotCard, DrawnCard, SavedReading } from '@/types';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useTranslations } from '@/hooks/useTranslations';
-import type { TranslationKeys } from '@/hooks/useTranslations'; // Import TranslationKeys
+import type { TranslationKeys } from '@/hooks/useTranslations'; 
 import { Loader2, Save, ArrowLeft } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -56,22 +56,21 @@ export default function ReadingPage() {
     if (currentSpread) {
       setSpread(currentSpread);
       setCurrentDeck(shuffleDeck(fullTarotDeck));
-      setIsDrawingMode(true); // Start in drawing mode
-      // Reset state for new spread
+      setIsDrawingMode(true); 
       setDrawnCards([]);
       setAiInterpretation('');
-      setDrawingForPosition(0); // Start by drawing for the first position
+      setDrawingForPosition(0); 
     } else {
-      toast({ title: "Spread not found", variant: "destructive" }); // Consider translating "Spread not found"
-      router.push('/reading'); // Redirect if spread is invalid
+      toast({ title: t('errorSpreadNotFound' as TranslationKeys), variant: "destructive" });
+      router.push('/reading'); 
     }
     setIsLoading(false);
-  }, [spreadId, router, toast]);
+  }, [spreadId, router, toast, t]);
 
 
   const handleSelectPositionToDraw = (positionIndex: number) => {
     if (drawnCards.find(dc => dc.positionName === spread?.positions[positionIndex])) {
-      // Card already drawn for this position
+      
       return;
     }
     setDrawingForPosition(positionIndex);
@@ -80,17 +79,17 @@ export default function ReadingPage() {
   const handlePickCardFromDeck = (selectedCard: TarotCard) => {
     if (!spread || drawingForPosition === null) return;
 
-    const isReversed = Math.random() < 0.3; // 30% chance of being reversed
-    const positionNameKey = spread.positions[drawingForPosition]; // This is now a key
+    const isReversed = Math.random() < 0.3; 
+    const positionNameKey = spread.positions[drawingForPosition]; 
     
     const newDrawnCard: DrawnCard = {
       card: selectedCard,
       isReversed,
-      positionName: positionNameKey, // Store the key
+      positionName: positionNameKey, 
     };
 
     setDrawnCards(prev => [...prev, newDrawnCard]);
-    setCurrentDeck(prev => prev.filter(card => card.id !== selectedCard.id)); // Remove card from available deck
+    setCurrentDeck(prev => prev.filter(card => card.id !== selectedCard.id)); 
 
     if (drawnCards.length + 1 < spread.cardCount) {
       let nextPos = (drawingForPosition + 1) % spread.cardCount;
@@ -127,7 +126,7 @@ export default function ReadingPage() {
       newDrawn.push({
         card,
         isReversed: Math.random() < 0.3, 
-        positionName: spread.positions[i], // Store the key
+        positionName: spread.positions[i], 
       });
     }
     setDrawnCards(newDrawn);
@@ -139,11 +138,19 @@ export default function ReadingPage() {
 
   const handleSaveReading = () => {
     if (!spread || !userName || !readingDate) {
-      toast({ title: t('errorSavingReading' as TranslationKeys), description: "Please provide name, date, and ensure all cards are drawn.", variant: "destructive" }); // Consider translating description
+      toast({ 
+        title: t('errorSavingReading' as TranslationKeys), 
+        description: t('errorSavingReadingDescription' as TranslationKeys), 
+        variant: "destructive" 
+      });
       return;
     }
     if (drawnCards.length < spread.cardCount) {
-      toast({ title: "Incomplete Reading", description: "Please draw all cards for the spread.", variant: "destructive" }); // Consider translating title & description
+      toast({ 
+        title: t('errorIncompleteReading' as TranslationKeys), 
+        description: t('errorIncompleteReadingDescription' as TranslationKeys), 
+        variant: "destructive" 
+      });
       return;
     }
 
@@ -152,8 +159,8 @@ export default function ReadingPage() {
       userName,
       readingDate,
       customDetails,
-      spread, // spread still contains keys for name and positions
-      drawnCards, // drawnCards now contain positionName as a key
+      spread, 
+      drawnCards, 
       aiInterpretation,
       timestamp: Date.now(),
     };
@@ -213,8 +220,8 @@ export default function ReadingPage() {
           <Separator />
 
           <AIInterpretation
-            spread={spread} // Pass spread with keys
-            drawnCards={drawnCards} // Pass drawnCards with keys
+            spread={spread} 
+            drawnCards={drawnCards} 
             userName={userName}
             readingDate={readingDate}
             customDetails={customDetails}
@@ -232,3 +239,5 @@ export default function ReadingPage() {
     </div>
   );
 }
+
+    

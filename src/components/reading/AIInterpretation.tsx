@@ -15,8 +15,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 
 interface AIInterpretationProps {
-  spread: SpreadType; // spread.name and spread.positions are now keys
-  drawnCards: DrawnCardType[]; // drawnCard.positionName is now a key, card properties are keys
+  spread: SpreadType; 
+  drawnCards: DrawnCardType[]; 
   userName: string;
   readingDate: string;
   customDetails: string;
@@ -35,35 +35,43 @@ export function AIInterpretation({
 }: AIInterpretationProps) {
   const [interpretation, setInterpretation] = useState<string>(initialInterpretation);
   const [isLoading, setIsLoading] = useState(false);
-  const { t } = useTranslations(); // t function is available here
+  const { t } = useTranslations(); 
   const { toast } = useToast();
   const { locale } = useLanguage();
 
 
   const handleGenerateInterpretation = async () => {
     if (drawnCards.length < spread.cardCount) {
-        toast({ title: t('errorSavingReading' as TranslationKeys), description: "Please draw all cards for the spread before generating an interpretation.", variant: "destructive" });
+        toast({ 
+          title: t('errorIncompleteReading' as TranslationKeys), 
+          description: t('errorGenerateInterpretationDrawAll' as TranslationKeys), 
+          variant: "destructive" 
+        });
         return;
     }
     if (!userName || !readingDate) {
-        toast({ title: "Missing Information", description: "Please provide a name and date for the reading.", variant: "destructive" });
+        toast({ 
+          title: t('errorMissingInformation' as TranslationKeys), 
+          description: t('errorMissingInformationDescription' as TranslationKeys), 
+          variant: "destructive" 
+        });
         return;
     }
 
     setIsLoading(true);
     setInterpretation('');
 
-    // Translate spread name and positions before sending to AI
+    
     const translatedSpreadName = t(spread.name as TranslationKeys);
     const translatedPositionNames = spread.positions.map(pKey => t(pKey as TranslationKeys));
 
     const aiInput: TarotReadingInput = {
       spread: {
         id: spread.id,
-        name: translatedSpreadName, // Pass translated name
+        name: translatedSpreadName, 
         category: spread.category,
         cardCount: spread.cardCount,
-        positions: translatedPositionNames, // Pass translated positions
+        positions: translatedPositionNames, 
       },
       drawnCards: drawnCards.map(dc => ({
         card: {
@@ -72,7 +80,7 @@ export function AIInterpretation({
           meaning_up: t(dc.card.meaning_up as TranslationKeys),
           meaning_rev: t(dc.card.meaning_rev as TranslationKeys),
           desc: t(dc.card.desc as TranslationKeys),
-          yesNo: dc.card.yesNo, // Pass Yes/No as is (expected by AI schema)
+          yesNo: dc.card.yesNo, 
         },
         isReversed: dc.isReversed,
       })),
@@ -80,7 +88,7 @@ export function AIInterpretation({
       readingDate: readingDate,
       customDetails: customDetails || undefined,
       language: locale,
-      isPortuguese: locale === 'pt', // Explicitly pass based on current locale
+      isPortuguese: locale === 'pt', 
     };
 
     try {
@@ -90,8 +98,8 @@ export function AIInterpretation({
     } catch (error) {
       console.error("Error generating AI interpretation:", error);
       toast({
-        title: t('errorGeneratingInterpretation'),
-        description: (error as Error).message || "Unknown error",
+        title: t('errorGeneratingInterpretation' as TranslationKeys),
+        description: (error as Error).message || t('errorUnknown' as TranslationKeys),
         variant: "destructive"
       });
     } finally {
@@ -135,3 +143,5 @@ export function AIInterpretation({
     </Card>
   );
 }
+
+    

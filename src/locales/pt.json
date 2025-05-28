@@ -53,6 +53,16 @@
   "textNo": "Não",
   "textMaybe": "Talvez",
 
+  "errorSpreadNotFound": "Método Não Encontrado",
+  "errorSavingReadingDescription": "Por favor, forneça nome, data e certifique-se de que todas as cartas foram tiradas.",
+  "errorIncompleteReading": "Leitura Incompleta",
+  "errorIncompleteReadingDescription": "Por favor, tire todas as cartas para o método.",
+  "errorGenerateInterpretationDrawAll": "Por favor, tire todas as cartas para o método antes de gerar uma interpretação.",
+  "errorMissingInformation": "Informação Faltando",
+  "errorMissingInformationDescription": "Por favor, forneça um nome e data para a leitura.",
+  "errorUnknown": "Ocorreu um erro desconhecido. Por favor, tente novamente.",
+  "confirmDeleteReadingDescription": "Esta ação não pode ser desfeita. Isto irá excluir permanentemente a leitura para {{userName}} em {{date}}.",
+
   "spread_yn1_name": "Resposta Rápida",
   "spread_yn1_pos_0": "A Resposta",
 
@@ -232,3 +242,5 @@
   "card_35_meaning_rev": "Um caso amoroso, criatividade reprimida, fofoca, excessos, isolamento, amizades desfeitas, interferência de terceiros",
   "card_35_desc": "Simboliza celebração, amizade e comunidade. O Três de Copas frequentemente indica encontros alegres e colaboração criativa."
 }
+
+    

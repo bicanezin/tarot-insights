@@ -53,6 +53,16 @@
   "textNo": "No",
   "textMaybe": "Maybe",
 
+  "errorSpreadNotFound": "Spread Not Found",
+  "errorSavingReadingDescription": "Please provide name, date, and ensure all cards are drawn.",
+  "errorIncompleteReading": "Incomplete Reading",
+  "errorIncompleteReadingDescription": "Please draw all cards for the spread.",
+  "errorGenerateInterpretationDrawAll": "Please draw all cards for the spread before generating an interpretation.",
+  "errorMissingInformation": "Missing Information",
+  "errorMissingInformationDescription": "Please provide a name and date for the reading.",
+  "errorUnknown": "An unknown error occurred. Please try again.",
+  "confirmDeleteReadingDescription": "This action cannot be undone. This will permanently delete the reading for {{userName}} on {{date}}.",
+
   "spread_yn1_name": "Quick Answer",
   "spread_yn1_pos_0": "The Answer",
 
@@ -232,3 +242,5 @@
   "card_35_meaning_rev": "An affair, stifled creativity, gossip, overindulgence, isolation, broken friendships, third-party interference",
   "card_35_desc": "Symbolizes celebration, friendship, and community. The Three of Cups often indicates joyful gatherings and creative collaboration."
 }
+
+    
