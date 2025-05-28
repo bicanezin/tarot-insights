@@ -36,7 +36,14 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
       </CardHeader>
       <CardContent className="p-4 space-y-4">
         <div className="flex justify-center items-center">
-          <TarotCardImage cardName={card.name} imageNameHint={card.imageName} isReversed={isReversedDisplay} width={120} height={200}/>
+          <TarotCardImage 
+            cardName={card.name} 
+            imageNameHint={card.imageName} 
+            imageUrl={card.imageUrl} 
+            isReversed={isReversedDisplay} 
+            width={120} 
+            height={200}
+          />
         </div>
         
         <Tabs defaultValue={currentOrientationKey} className="w-full">

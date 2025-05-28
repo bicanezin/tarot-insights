@@ -6,46 +6,45 @@ import { cn } from '@/lib/utils';
 interface TarotCardImageProps {
   cardName?: string;
   imageNameHint?: string; // e.g. "the fool" "strength lion"
+  imageUrl?: string; // Optional direct image URL
   isReversed: boolean;
   className?: string;
   width?: number;
   height?: number;
 }
 
-export function TarotCardImage({ cardName, imageNameHint, isReversed, className, width = 150, height = 250 }: TarotCardImageProps) {
+export function TarotCardImage({ cardName, imageNameHint, imageUrl, isReversed, className, width = 150, height = 250 }: TarotCardImageProps) {
   let aiHint: string;
 
   if (imageNameHint) {
-    // Prioritize imageNameHint if provided (should be 1-2 words, space-separated)
     aiHint = imageNameHint;
   } else if (cardName) {
-    // Fallback: take the first one or two words of cardName
-    const words = cardName.toLowerCase().match(/\b(\w+)\b/g) || []; // Match words
+    const words = cardName.toLowerCase().match(/\b(\w+)\b/g) || [];
     aiHint = words.slice(0, 2).join(' ');
-    if (!aiHint) { // If cardName didn't produce words (e.g., empty or symbols only)
+    if (!aiHint) {
       aiHint = "tarot card";
     }
   } else {
-    // Absolute fallback
     aiHint = "tarot card";
   }
-
-  // Ensure the hint doesn't exceed a practical length for an attribute, though "two words" rule usually covers this.
   aiHint = aiHint.substring(0, 50);
 
+  const imageSource = imageUrl || `https://placehold.co/${width}x${height}.png`;
 
   return (
     <div className={cn("relative rounded-lg overflow-hidden shadow-lg border border-border", className)} style={{ width, height }}>
       <Image
-        src={`https://placehold.co/${width}x${height}.png`}
+        src={imageSource}
         alt={cardName || 'Tarot Card'}
         width={width}
         height={height}
         data-ai-hint={aiHint}
         className={cn(
-          'object-cover transition-transform duration-500 ease-in-out',
+          'object-cover transition-transform duration-500 ease-in-out w-full h-full', // Added w-full h-full for better image fill
           isReversed ? 'transform rotate-180' : ''
         )}
+        // If using external imageUrls, ensure they are added to next.config.ts remotePatterns
+        unoptimized={!!imageUrl} // Useful if using many different external domains for imageUrl
       />
       {cardName && (
          <div className={cn(
@@ -65,7 +64,7 @@ export function CardBack({ className, width = 150, height = 250 }: Pick<TarotCar
     <div
       className={cn(
         "rounded-lg overflow-hidden shadow-lg border border-primary bg-primary/20 flex items-center justify-center",
-        "hover:shadow-xl transition-shadow cursor-pointer",
+        "hover:shadow-xl transition-shadow cursor-pointer h-full w-full", // Ensure CardBack also respects dimensions
         className
       )}
       style={{ width, height }}

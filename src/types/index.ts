@@ -7,6 +7,7 @@ export interface TarotCard {
   desc: string;
   yesNo: 'Yes' | 'No' | 'Maybe';
   imageName?: string; // e.g., "the-fool" to derive placeholder hint
+  imageUrl?: string; // Optional URL for the card's image
 }
 
 export interface Spread {
@@ -21,11 +22,11 @@ export interface Spread {
 export interface DrawnCard {
   card: TarotCard;
   isReversed: boolean;
-  positionName: string; 
+  positionName: string;
 }
 
 export interface SavedReading {
-  id: string; 
+  id: string;
   userName: string;
   readingDate: string;
   customDetails?: string;

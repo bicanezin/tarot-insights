@@ -103,7 +103,15 @@ export function SpreadDisplay({
             <div className="flex flex-nowrap overflow-x-auto gap-3 p-2 scrollbar-thin scrollbar-thumb-primary/50 scrollbar-track-muted">
               {availableDeck.map((card) => (
                 <div key={card.id} onClick={() => onPickCardFromDeck(card)} className="cursor-pointer flex-shrink-0">
-                  <TarotCardImage cardName={card.name} imageNameHint={card.imageName} isReversed={false} width={100} height={166} className="hover:ring-2 hover:ring-primary"/>
+                  <TarotCardImage 
+                    cardName={card.name} 
+                    imageNameHint={card.imageName} 
+                    imageUrl={card.imageUrl}
+                    isReversed={false} 
+                    width={100} 
+                    height={166} 
+                    className="hover:ring-2 hover:ring-primary"
+                  />
                 </div>
               ))}
             </div>
