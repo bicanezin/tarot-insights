@@ -12,21 +12,27 @@ interface TarotCardImageProps {
   height?: number;
 }
 
-// Simple slugify function for placeholder hint
-function slugify(text: string = ""): string {
-  return text
-    .toString()
-    .normalize('NFKD') // Normalize accented characters
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-') // Replace spaces with -
-    .replace(/[^\w-]+/g, '') // Remove all non-word chars
-    .replace(/--+/g, '-'); // Replace multiple - with single -
-}
-
-
 export function TarotCardImage({ cardName, imageNameHint, isReversed, className, width = 150, height = 250 }: TarotCardImageProps) {
-  const hint = slugify(imageNameHint || cardName || "tarot card").substring(0, 30); // Max 2 keywords for data-ai-hint
+  let aiHint: string;
+
+  if (imageNameHint) {
+    // Prioritize imageNameHint if provided (should be 1-2 words, space-separated)
+    aiHint = imageNameHint;
+  } else if (cardName) {
+    // Fallback: take the first one or two words of cardName
+    const words = cardName.toLowerCase().match(/\b(\w+)\b/g) || []; // Match words
+    aiHint = words.slice(0, 2).join(' ');
+    if (!aiHint) { // If cardName didn't produce words (e.g., empty or symbols only)
+      aiHint = "tarot card";
+    }
+  } else {
+    // Absolute fallback
+    aiHint = "tarot card";
+  }
+
+  // Ensure the hint doesn't exceed a practical length for an attribute, though "two words" rule usually covers this.
+  aiHint = aiHint.substring(0, 50);
+
 
   return (
     <div className={cn("relative rounded-lg overflow-hidden shadow-lg border border-border", className)} style={{ width, height }}>
@@ -35,7 +41,7 @@ export function TarotCardImage({ cardName, imageNameHint, isReversed, className,
         alt={cardName || 'Tarot Card'}
         width={width}
         height={height}
-        data-ai-hint={hint}
+        data-ai-hint={aiHint}
         className={cn(
           'object-cover transition-transform duration-500 ease-in-out',
           isReversed ? 'transform rotate-180' : ''
@@ -56,12 +62,12 @@ export function TarotCardImage({ cardName, imageNameHint, isReversed, className,
 // Placeholder for card back
 export function CardBack({ className, width = 150, height = 250 }: Pick<TarotCardImageProps, 'className' | 'width' | 'height'>) {
   return (
-    <div 
+    <div
       className={cn(
         "rounded-lg overflow-hidden shadow-lg border border-primary bg-primary/20 flex items-center justify-center",
         "hover:shadow-xl transition-shadow cursor-pointer",
         className
-      )} 
+      )}
       style={{ width, height }}
       data-ai-hint="card back pattern"
     >
