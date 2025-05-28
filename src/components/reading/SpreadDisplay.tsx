@@ -45,12 +45,14 @@ export function SpreadDisplay({
     return drawnCards.find(dc => dc.positionName === spread.positions[index]);
   };
 
+  const spreadCategoryKey = `category${spread.category.replace('/', '')}` as TranslationKeys;
+
   return (
     <Card className="w-full">
       <CardHeader>
         <CardTitle className="font-serif-display text-2xl">{t(spread.name as TranslationKeys)}</CardTitle>
         <CardDescription>
-          {spread.cardCount} {t('card', {count: spread.cardCount})} - {t(\`category\${spread.category.replace('/', '')}\` as any)}
+          {spread.cardCount} {t('card', {count: spread.cardCount})} - {t(spreadCategoryKey)}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -131,3 +133,4 @@ export function SpreadDisplay({
     </Card>
   );
 }
+
