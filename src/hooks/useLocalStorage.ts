@@ -23,14 +23,14 @@ function getStoredValue<T>(key: string, initialValue: T | (() => T)): T {
 export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
   // Initialize state from localStorage or initialValue.
   // This function (the initializer for useState) runs only once on mount.
-  const [storedValue, setStoredValue] = useState<T>(() => 
+  const [storedValue, setStoredValue] = useState<T>(() =>
     getStoredValue(key, initialValue)
   );
 
   // This useEffect handles:
   // 1. Initializing localStorage with initialValue if it's empty for the given key.
-  // 2. Re-loading storedValue from localStorage if the `key` prop changes.
-  // It depends only on `key`. `initialValue` is accessed via closure.
+  // 2. Re-loading storedValue from localStorage if the key prop changes (ensuring sync).
+  // It depends only on key. initialValue is accessed via closure from the hook's render.
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
@@ -38,6 +38,7 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
 
     try {
       const item = window.localStorage.getItem(key);
+      // initialValue here is the one from the props of the current render cycle of useLocalStorage.
       const currentInitialValue = initialValue instanceof Function ? initialValue() : initialValue;
 
       if (item) {
@@ -52,8 +53,9 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
         // LocalStorage is empty for this key.
         // 1. Set localStorage with the current initialValue.
         window.localStorage.setItem(key, JSON.stringify(currentInitialValue));
-        // 2. Ensure React state (storedValue) reflects this initialValue.
-        //    (This is important if the key changed and the new key has no LS entry).
+        // 2. Ensure React state (storedValue) reflects this initialValue if it's different.
+        // This can happen if storedValue was initialized with an older initialValue (e.g. if key changed)
+        // or if the initial getStoredValue resulted in a different state.
         if (JSON.stringify(storedValue) !== JSON.stringify(currentInitialValue)) {
           setStoredValue(currentInitialValue);
         }
@@ -61,7 +63,7 @@ export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
     } catch (error) {
       console.warn(`Error synchronizing localStorage for key "${key}":`, error);
     }
-  }, [key]); // Only re-run this effect if the 'key' changes.
+  }, [key]); // Only re-run this effect if the 'key' changes. initialValue changes are handled by key changing or direct use.
 
   // Function to update both React state and localStorage.
   const setValue = (value: T | ((val: T) => T)) => {
