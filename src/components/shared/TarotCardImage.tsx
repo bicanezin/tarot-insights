@@ -46,7 +46,7 @@ export function TarotCardImage({ cardName, imageNameHint, imageUrl, isReversed, 
           'object-cover transition-transform duration-500 ease-in-out w-full h-full',
           isReversed ? 'transform rotate-180' : ''
         )}
-        unoptimized={!!imageUrl}
+        unoptimized={!!imageUrl && !imageUrl.startsWith('https://placehold.co')} // unoptimize if it's a user-provided image that's not a placeholder
       />
       {cardName && (
          <div className={cn(
@@ -61,21 +61,25 @@ export function TarotCardImage({ cardName, imageNameHint, imageUrl, isReversed, 
 }
 
 // Placeholder for card back
-export function CardBack({ className }: Pick<TarotCardImageProps, 'className'>) {
+export function CardBack({ className, width = 150, height = 250 }: Pick<TarotCardImageProps, 'className' | 'width' | 'height'>) {
+  const cardBackUrl = "https://img.freepik.com/premium-vector/astrological-tarot-design-with-zodiac-elements-mystic-ritual-card_543062-4718.jpg";
   return (
     <div
       className={cn(
-        "rounded-lg overflow-hidden shadow-lg border border-primary bg-primary/20 flex items-center justify-center",
+        "relative rounded-lg overflow-hidden shadow-lg border border-primary",
         "hover:shadow-xl transition-shadow cursor-pointer",
         className // This className should control width and aspect-ratio (e.g., "w-full aspect-[3/5]")
       )}
-      data-ai-hint="card back pattern"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-1/2 h-1/2 text-primary-foreground opacity-50">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
-        <path d="M12 17.5c-3.04 0-5.5-2.46-5.5-5.5S8.96 6.5 12 6.5s5.5 2.46 5.5 5.5-2.46 5.5-5.5 5.5zm0-9c-1.93 0-3.5 1.57-3.5 3.5s1.57 3.5 3.5 3.5 3.5-1.57 3.5-3.5-1.57-3.5-3.5-3.5z"/>
-        <circle cx="12" cy="12" r="2"/>
-      </svg>
+      <Image
+        src={cardBackUrl}
+        alt="Card Back"
+        width={width}
+        height={height}
+        data-ai-hint="tarot card back"
+        className="object-cover w-full h-full"
+        unoptimized={true} // External image, might not be optimizable by Next/Image by default or might have its own optimizations
+      />
     </div>
   );
 }
