@@ -15,7 +15,7 @@ export const spreadLayouts: Record<string, SpreadLayoutConfig> = {
     cardPositions: [{}] 
   },
   'row-3': {
-    containerClassName: 'grid grid-cols-1 md:grid-cols-3 gap-6 p-4 items-start justify-center',
+    containerClassName: 'grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 items-start justify-center', // Changed md: to lg:
     cardPositions: [
       { gridArea: '1 / 1 / auto / auto' },
       { gridArea: '1 / 2 / auto / auto' },
@@ -47,7 +47,7 @@ export const spreadLayouts: Record<string, SpreadLayoutConfig> = {
     ]
   },
   'row-3-financial1': { // Corresponds to f1: Financial Snapshot & user "FINANTIAL SPREAD 2"
-    containerClassName: 'grid grid-cols-1 md:grid-cols-3 gap-6 p-4 items-start justify-center',
+    containerClassName: 'grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 items-start justify-center', // Changed md: to lg:
     cardPositions: [
       { gridArea: '1 / 1 / auto / auto' }, 
       { gridArea: '1 / 2 / auto / auto' }, 
@@ -72,11 +72,21 @@ export const getLayoutConfig = (layoutType: string | undefined, cardCount: numbe
     return spreadLayouts[layoutType];
   }
   // Generic fallback layout: responsive grid
-  const cols = cardCount <= 2 ? cardCount : (cardCount === 4 ? 2 : 3); // 1, 2, or 3 columns
+  const cols = cardCount <= 1 ? 1 : (cardCount <= 3 ? cardCount : (cardCount === 4 ? 2 : 3));
+  // For 3 cards, default to 1 col on smallest, then respect cardCount (3) for sm and up.
+  // For other counts, try to fit.
+  let gridClasses = `grid-cols-1`;
+  if (cardCount === 2) gridClasses += ` sm:grid-cols-2`;
+  else if (cardCount === 3) gridClasses += ` sm:grid-cols-3`; // Default to 3 cols on sm and up if not specified
+  else if (cardCount === 4) gridClasses += ` sm:grid-cols-2`;
+  else if (cardCount > 4) gridClasses += ` sm:grid-cols-2 lg:grid-cols-3`;
+
+
   return {
-    containerClassName: `grid grid-cols-1 sm:grid-cols-${Math.min(cardCount, 2)} md:grid-cols-${cols} gap-6 p-4 items-start justify-center`,
+    containerClassName: `grid ${gridClasses} gap-6 p-4 items-start justify-center`,
     cardPositions: Array(cardCount).fill({}).map((_, i) => ({
        // This generic mapping might not be perfect for grid-area but works for sequential items
     })),
   };
 };
+
