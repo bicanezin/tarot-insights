@@ -91,7 +91,7 @@ export function SpreadDisplay({
                      <CardBack 
                         className={cn(
                             "w-full aspect-[3/5]", // CardBack will fill this and maintain aspect ratio
-                            isDrawingMode && drawingForPosition === index ? "animate-pulse ring-2 ring-offset-2 ring-primary" : "",
+                            isDrawingMode && drawingForPosition === index ? "ring-2 ring-offset-2 ring-primary" : "",
                             isDrawingMode && ! (drawingForPosition === index) ? "opacity-50" : ""
                         )} 
                      />
