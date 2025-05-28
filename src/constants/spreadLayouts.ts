@@ -15,7 +15,7 @@ export const spreadLayouts: Record<string, SpreadLayoutConfig> = {
     cardPositions: [{}] 
   },
   'row-3': {
-    containerClassName: 'grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 items-start justify-center', // Changed md: to lg:
+    containerClassName: 'grid grid-cols-3 gap-6 p-4 items-start justify-center',
     cardPositions: [
       { gridArea: '1 / 1 / auto / auto' },
       { gridArea: '1 / 2 / auto / auto' },
@@ -47,7 +47,7 @@ export const spreadLayouts: Record<string, SpreadLayoutConfig> = {
     ]
   },
   'row-3-financial1': { // Corresponds to f1: Financial Snapshot & user "FINANTIAL SPREAD 2"
-    containerClassName: 'grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 items-start justify-center', // Changed md: to lg:
+    containerClassName: 'grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 items-start justify-center bg-yellow', // Changed md: to lg:
     cardPositions: [
       { gridArea: '1 / 1 / auto / auto' }, 
       { gridArea: '1 / 2 / auto / auto' }, 
@@ -79,7 +79,7 @@ export const getLayoutConfig = (layoutType: string | undefined, cardCount: numbe
   if (cardCount === 2) gridClasses += ` sm:grid-cols-2`;
   else if (cardCount === 3) gridClasses += ` sm:grid-cols-3`; // Default to 3 cols on sm and up if not specified
   else if (cardCount === 4) gridClasses += ` sm:grid-cols-2`;
-  else if (cardCount > 4) gridClasses += ` sm:grid-cols-2 lg:grid-cols-3`;
+  else if (cardCount > 4) gridClasses += ` sm:grid-cols-2 lg:grid-cols-3 bg-red`;
 
 
   return {

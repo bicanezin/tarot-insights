@@ -14,7 +14,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 interface DrawnCardViewProps {
   drawnCardData: DrawnCard;
   positionName: string; // This will now be a translation key
-  showFullDetails?: boolean; 
+  showFullDetails?: boolean;
 }
 
 export function DrawnCardView({ drawnCardData, positionName, showFullDetails = false }: DrawnCardViewProps) {
@@ -25,7 +25,7 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
   const toggleReversed = () => {
     setIsReversedDisplay(!isReversedDisplay);
   };
-  
+
   const translatedCardName = t(card.name as TranslationKeys);
   const translatedMeaningUp = t(card.meaning_up as TranslationKeys);
   const translatedMeaningRev = t(card.meaning_rev as TranslationKeys);
@@ -52,50 +52,45 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
       </CardHeader>
       <CardContent className="p-3 sm:p-4 space-y-3 sm:space-y-4 flex-grow flex flex-col">
         <div className="flex justify-center items-center">
-           {/* This container controls the image width; TarotCardImage will fill it */}
+          {/* This container controls the image width; TarotCardImage will fill it */}
           <div className="w-3/4 max-w-[120px] sm:max-w-[140px] md:max-w-[150px] mx-auto">
-            <TarotCardImage 
-              cardName={translatedCardName} 
-              imageNameHint={card.imageName} 
-              imageUrl={card.imageUrl} 
-              isReversed={isReversedDisplay} 
+            <TarotCardImage
+              cardName={translatedCardName}
+              imageNameHint={card.imageName}
+              imageUrl={card.imageUrl}
+              isReversed={isReversedDisplay}
               width={150} // For placeholder generation and Next/Image aspect ratio
               height={250}
               className="w-full aspect-[3/5]" // Makes the TarotCardImage div have this aspect ratio
             />
           </div>
         </div>
-        
-        <Tabs defaultValue={currentOrientationKey} className="w-full text-xs sm:text-sm">
-          <TabsList className="grid w-full grid-cols-2 h-9 sm:h-10">
-            <TabsTrigger value="upright" onClick={() => setIsReversedDisplay(false)}>{t('upright')}</TabsTrigger>
-            <TabsTrigger value="reversed" onClick={() => setIsReversedDisplay(true)}>{t('reversed')}</TabsTrigger>
-          </TabsList>
-          <TabsContent value="upright">
-            <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background min-h-[80px] sm:min-h-[100px]">
-              <h4 className="font-semibold text-xs sm:text-sm mb-1">{t('meaning')} ({t('upright')})</h4>
-              <ScrollArea className="h-[50px] sm:h-[70px]">
-                <p className="text-xs text-foreground/80">{translatedMeaningUp}</p>
-              </ScrollArea>
-            </div>
-          </TabsContent>
-          <TabsContent value="reversed">
-             <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background min-h-[80px] sm:min-h-[100px]">
-              <h4 className="font-semibold text-xs sm:text-sm mb-1">{t('meaning')} ({t('reversed')})</h4>
-              <ScrollArea className="h-[50px] sm:h-[70px]">
-                <p className="text-xs text-foreground/80">{translatedMeaningRev}</p>
-              </ScrollArea>
-            </div>
-          </TabsContent>
-        </Tabs>
+
+
+        {currentOrientationKey === 'reversed' ?
+          <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background min-h-[80px] sm:min-h-[100px]">
+            <h4 className="font-semibold text-xs sm:text-sm mb-1">{t('meaning')} ({t('reversed')})</h4>
+            <ScrollArea className="h-[50px] sm:h-[70px]">
+              <p className="text-xs text-foreground/80">{isReversedDisplay}{translatedMeaningRev}</p>
+            </ScrollArea>
+          </div>
+          :
+          <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background min-h-[80px] sm:min-h-[100px]">
+            <h4 className="font-semibold text-xs sm:text-sm mb-1">{isReversedDisplay}{t('meaning')} ({t('upright')})</h4>
+            <ScrollArea className="h-[50px] sm:h-[70px]">
+              <p className="text-xs text-foreground/80">{translatedMeaningUp}</p>
+            </ScrollArea>
+          </div>
+        }
+
 
         {showFullDetails && (
           <>
             <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background">
-                <h4 className="font-semibold text-xs sm:text-sm mb-1">{t('cardDescription')}</h4>
-                 <ScrollArea className="h-[40px] sm:h-[60px]">
-                  <p className="text-xs text-foreground/80">{translatedDesc}</p>
-                </ScrollArea>
+              <h4 className="font-semibold text-xs sm:text-sm mb-1">{t('cardDescription')}</h4>
+              <ScrollArea className="h-[40px] sm:h-[60px]">
+                <p className="text-xs text-foreground/80">{translatedDesc}</p>
+              </ScrollArea>
             </div>
             {card.yesNo && (
               <p className="text-xs sm:text-sm text-center"><strong>{t('yesNoLabel')}:</strong> {translatedYesNo}</p>
