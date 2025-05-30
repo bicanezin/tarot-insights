@@ -1,4 +1,4 @@
-# 🔮 Projeto Firebase Studio Next.js
+# 🔮 Tarot Insights
 
 ## 📝 Visão Geral
 
