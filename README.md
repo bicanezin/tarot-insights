@@ -4,7 +4,7 @@
 This project is a full-stack web application built using [Next.js](https://nextjs.org/) and [Firebase Studio](https://firebase.google.com/products/studio), a cloud-based development environment for rapid prototyping and deployment of AI-infused applications. The project leverages [next-intl](https://next-intl-docs.vercel.app/) for internationalization (i18n), supporting multiple languages (e.g., English and Portuguese) with locale-based routing.
 
 The application is hosted on Firebase Studio at:  
-[https://9000-firebase-studio-1748394713472.cluster-qhrn7lb3szcfcud6uanedbkjnm.cloudworkstations.dev/](https://9000-firebase-studio-1748394713472.cluster-qhrn7lb3szcfcud6uanedbkjnm.cloudworkstations.dev/)
+[https://studio--tarot-insights-c2rwx.us-central1.hosted.app/](https://studio--tarot-insights-c2rwx.us-central1.hosted.app/)
 
 ## Features
 - **Internationalization (i18n)**: Supports multiple languages (e.g., `en`, `pt`) with locale-prefixed URLs (e.g., `/en`, `/pt`).
