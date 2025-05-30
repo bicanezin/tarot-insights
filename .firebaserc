@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "tarot-insights-c2rwx",
+    "staging": "tarot-insights-c2rwx"
+  },
+  "targets": {},
+  "etags": {}
+}
