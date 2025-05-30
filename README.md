@@ -175,7 +175,7 @@ If you encounter a 404 error when visiting the root path (`/`), it's likely due 
 
 Contributions are welcome! To contribute:
 
-1. Fork the repository (if exported from Firebase Studio).
+1. Fork the repository.
 2. Create a feature branch (`git checkout -b feature/your-feature`).
 3. Commit changes (`git commit -m 'Add your feature'`).
 4. Push to the branch (`git push origin feature/your-feature`).
