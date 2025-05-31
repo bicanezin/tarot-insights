@@ -811,8 +811,11 @@ tarotDeck.forEach((card) => {
     uniqueCardMap.set(card.id, card);
   }
 });
-// Add more cards to make it a full 78 card deck, for now use the unique ones provided
-export const fullTarotDeck: TarotCard[] = Array.from(uniqueCardMap.values());
+
+// Ensure we have all cards from 0 to 78 in order
+export const fullTarotDeck: TarotCard[] = Array.from(uniqueCardMap.values())
+  .sort((a, b) => a.id - b.id)
+  .filter((card) => card.id >= 0 && card.id <= 78);
 
 // For simplicity, we'll use the provided subset, but ensure no duplicates in the actual app logic if drawing from this 'fullTarotDeck'
 // The initial request had some duplicate card names with different IDs (e.g. Wheel of Fortune, Chariot)

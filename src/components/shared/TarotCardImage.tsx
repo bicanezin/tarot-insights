@@ -1,7 +1,6 @@
-
 "use client";
-import Image from 'next/image';
-import { cn } from '@/lib/utils';
+import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 interface TarotCardImageProps {
   cardName?: string;
@@ -13,14 +12,22 @@ interface TarotCardImageProps {
   height?: number; // For next/image optimization and placeholder aspect ratio
 }
 
-export function TarotCardImage({ cardName, imageNameHint, imageUrl, isReversed, className, width = 150, height = 250 }: TarotCardImageProps) {
+export function TarotCardImage({
+  cardName,
+  imageNameHint,
+  imageUrl,
+  isReversed,
+  className,
+  width = 150,
+  height = 250,
+}: TarotCardImageProps) {
   let aiHint: string;
 
   if (imageNameHint) {
     aiHint = imageNameHint;
   } else if (cardName) {
     const words = cardName.toLowerCase().match(/\b(\w+)\b/g) || [];
-    aiHint = words.slice(0, 2).join(' ');
+    aiHint = words.slice(0, 2).join(" ");
     if (!aiHint) {
       aiHint = "tarot card";
     }
@@ -38,31 +45,34 @@ export function TarotCardImage({ cardName, imageNameHint, imageUrl, isReversed, 
     <div className={cn("relative rounded-lg overflow-hidden shadow-lg border border-border", className)}>
       <Image
         src={imageSource}
-        alt={cardName || 'Tarot Card'}
+        alt={cardName || "Tarot Card"}
         width={width} // Used by Next/Image for aspect ratio and optimization
         height={height} // Used by Next/Image for aspect ratio and optimization
         data-ai-hint={aiHint}
         className={cn(
-          'object-cover transition-transform duration-500 ease-in-out w-full h-full',
-          isReversed ? 'transform rotate-180' : ''
+          "object-contain transition-transform duration-500 ease-in-out w-full h-full",
+          isReversed ? "transform rotate-180" : ""
         )}
-        unoptimized={!!imageUrl && !imageUrl.startsWith('https://placehold.co')} // unoptimize if it's a user-provided image that's not a placeholder
+        unoptimized={!!imageUrl && !imageUrl.startsWith("https://placehold.co")} // unoptimize if it's a user-provided image that's not a placeholder
       />
-      {cardName && (
-         <div className={cn(
+      {/* {cardName && (
+        <div
+          className={cn(
             "absolute bottom-1 left-1 right-1 bg-black/50 text-white text-[10px] sm:text-xs p-1 rounded text-center pointer-events-none",
-            isReversed ? 'transform rotate-180' : ''
-          )}>
-          <span className={cn("inline-block", isReversed ? 'transform rotate-180' : '')}>{cardName}</span>
+            isReversed ? "transform rotate-180" : ""
+          )}
+        >
+          <span className={cn("inline-block", isReversed ? "transform rotate-180" : "")}>{cardName}</span>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
 
 // Placeholder for card back
-export function CardBack({ className, width = 150, height = 250 }: Pick<TarotCardImageProps, 'className' | 'width' | 'height'>) {
-  const cardBackUrl = "https://img.freepik.com/premium-vector/astrological-tarot-design-with-zodiac-elements-mystic-ritual-card_543062-4718.jpg";
+export function CardBack({ className, width = 150, height = 250 }: Pick<TarotCardImageProps, "className" | "width" | "height">) {
+  const cardBackUrl =
+    "https://img.freepik.com/premium-vector/astrological-tarot-design-with-zodiac-elements-mystic-ritual-card_543062-4718.jpg";
   return (
     <div
       className={cn(
