@@ -70,10 +70,10 @@ export function SpreadDisplay({
                 key={index}
                 style={{ gridArea: positionStyle.gridArea, ...positionStyle.style }}
                 className={cn(
-                  "flex flex-col items-center justify-start space-y-1 p-1 sm:p-2 rounded-lg", // justify-start
+                  "flex flex-col items-center justify-start space-y-0.5 p-1 sm:p-1.5 rounded-lg", // Reduced space-y and padding
                   isDrawingMode && drawingForPosition === index && "ring-2 ring-primary shadow-lg bg-primary/10",
                   !drawnCardData && isDrawingMode && "cursor-pointer hover:bg-accent/20",
-                  "min-h-[200px] sm:min-h-[280px] md:min-h-[320px]" // Adjusted min-height for content
+                  "min-h-[180px] sm:min-h-[240px] md:min-h-[280px]" // Reduced min-height values
                 )}
                 onClick={() => !drawnCardData && isDrawingMode && onSelectPositionToDraw(index)}
               >
