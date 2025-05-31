@@ -134,7 +134,6 @@ export function SpreadDisplay({
                 ))}
               </div>
             </div>
-            <p className="text-xs text-muted-foreground text-center mt-2">{t("cardDescription")}</p>
           </Card>
         )}
 
