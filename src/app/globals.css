@@ -24,13 +24,13 @@ body {
     --secondary-foreground: 340 100% 10%; /* Darker text for pale rose */
     --muted: 0 0% 90%; /* Slightly darker grey for muted */
     --muted-foreground: 0 0% 45.1%;
-    --accent: 340 100% 89%; /* #FFBCCD Pale rose */
-    --accent-foreground: 340 100% 10%; /* Darker text for pale rose */
+    --accent: 43 29% 50%; /* #A38C5B Muted gold */
+    --accent-foreground: 43 29% 10%; /* Darker text for muted gold */
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 240 60% 85%; /* Adjusted ring for lavender primary */
+    --ring: 43 29% 85%; /* Adjusted ring for gold accent */
     --radius: 0.5rem;
 
     --chart-1: 12 76% 61%;
@@ -62,13 +62,13 @@ body {
     --secondary-foreground: 0 0% 98%;
     --muted: 240 5% 25%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 340 70% 75%; /* Lighter Pale Rose for dark mode */
-    --accent-foreground: 0 0% 10%;
+    --accent: 43 29% 60%; /* Lighter muted gold for dark mode */
+    --accent-foreground: 43 29% 98%; /* Light text for dark mode gold */
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5% 30%;
     --input: 240 5% 30%;
-    --ring: 240 50% 70%; /* Adjusted ring for dark primary */
+    --ring: 43 29% 70%; /* Adjusted ring for dark gold accent */
 
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
