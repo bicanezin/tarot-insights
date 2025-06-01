@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Mulish } from "next/font/google";
-import { GeistSans, GeistMono } from "geist/font"; // Corrected import path
+import { GeistSans, GeistMono } from "geist/font";
 
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 const mulish = Mulish({
   subsets: ["latin"],
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("min-h-screen bg-background font-sans antialiased", GeistSans.variable, GeistMono.variable, mulish.variable)}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider>
           <LanguageProvider>
             {children}
             <Toaster />

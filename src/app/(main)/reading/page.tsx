@@ -57,7 +57,7 @@ function ReadingContent() {
         <SpreadDisplay spreadsToDisplay={spreadsToDisplay} t={t} />
       </Suspense>
 
-      {spreadsToDisplay.length === 0 && <p className="text-center text-muted-foreground">{t("noReadingsFound")} for this category.</p>}
+      {spreadsToDisplay.length === 0 && <p className="text-center ">{t("noReadingsFound")} for this category.</p>}
     </div>
   );
 }
