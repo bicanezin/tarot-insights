@@ -1,4 +1,3 @@
-
 // This is an auto-generated file from Firebase Studio.
 
 'use server';
@@ -11,8 +10,8 @@
  * - TarotReadingOutput - The return type for the generateTarotReadingInterpretation function.
  */
 
-import {ai} from '@/ai/genkit';
-import {z} from 'genkit';
+import { ai } from '@/ai/genkit';
+import { z } from 'genkit';
 
 const TarotCardSchema = z.object({
   id: z.number(),
@@ -41,9 +40,18 @@ const TarotReadingInputSchema = z.object({
   drawnCards: z.array(DrawnCardSchema),
   userName: z.string().describe('The name of the person receiving the tarot reading.'),
   readingDate: z.string().describe('The date the tarot reading is taking place.'),
-  customDetails: z.string().optional().describe('Any custom details provided by the user to be considered in the interpretation.'),
-  language: z.enum(['en', 'pt']).default('en').describe('The language to be used for the interpretation (en: English, pt: Portuguese).'),
-  isPortuguese: z.boolean().optional().describe('Internal flag indicating if the language is Portuguese for template logic.'),
+  customDetails: z
+    .string()
+    .optional()
+    .describe('Any custom details provided by the user to be considered in the interpretation.'),
+  language: z
+    .enum(['en', 'pt'])
+    .default('en')
+    .describe('The language to be used for the interpretation (en: English, pt: Portuguese).'),
+  isPortuguese: z
+    .boolean()
+    .optional()
+    .describe('Internal flag indicating if the language is Portuguese for template logic.'),
 });
 
 export type TarotReadingInput = z.infer<typeof TarotReadingInputSchema>;
@@ -65,8 +73,8 @@ export async function generateTarotReadingInterpretation(input: TarotReadingInpu
 
 const prompt = ai.definePrompt({
   name: 'tarotReadingInterpretationPrompt',
-  input: {schema: TarotReadingInputSchema},
-  output: {schema: TarotReadingOutputSchema},
+  input: { schema: TarotReadingInputSchema },
+  output: { schema: TarotReadingOutputSchema },
   prompt: `You are an expert tarot reader providing personalized interpretations.
 
   Provide a detailed interpretation of the tarot reading based on the following information:
@@ -88,7 +96,8 @@ const prompt = ai.definePrompt({
   {{#if isPortuguese}}
   Translate the interpretation to Portuguese.
   {{/if}}
-  `,config: {
+  `,
+  config: {
     safetySettings: [
       {
         category: 'HARM_CATEGORY_HATE_SPEECH',
@@ -119,8 +128,7 @@ const generateTarotReadingInterpretationFlow = ai.defineFlow(
   async (flowInput: TarotReadingInput) => {
     // The prompt will receive the flowInput which now includes isPortuguese
     // as set by the wrapper function generateTarotReadingInterpretation
-    const {output} = await prompt(flowInput);
+    const { output } = await prompt(flowInput);
     return output!;
   }
 );
-

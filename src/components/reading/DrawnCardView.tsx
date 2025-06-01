@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 
 import type { DrawnCard, TarotCard } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription as UiCardDescription } from '@/components/ui/card';
@@ -8,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 import { useTranslations } from '@/hooks/useTranslations';
 import type { TranslationKeys } from '@/hooks/useTranslations';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 interface DrawnCardViewProps {
@@ -43,11 +42,12 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
     translatedYesNo = t('textMaybe');
   }
 
-
   return (
     <Card className="w-full overflow-hidden flex flex-col h-full">
       <CardHeader className="p-3 sm:p-4">
-        <UiCardDescription className="text-xs sm:text-sm text-muted-foreground truncate">{t(positionName as TranslationKeys)}</UiCardDescription>
+        <UiCardDescription className="text-xs sm:text-sm text-muted-foreground truncate">
+          {t(positionName as TranslationKeys)}
+        </UiCardDescription>
         <CardTitle className="font-serif-display text-base sm:text-lg md:text-xl">{translatedCardName}</CardTitle>
       </CardHeader>
       <CardContent className="p-3 sm:p-4 space-y-3 sm:space-y-4 flex-grow flex flex-col">
@@ -66,23 +66,29 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
           </div>
         </div>
 
-
-        {currentOrientationKey === 'reversed' ?
+        {currentOrientationKey === 'reversed' ? (
           <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background min-h-[80px] sm:min-h-[100px]">
-            <h4 className="font-semibold text-xs sm:text-sm mb-1">{t('meaning')} ({t('reversed')})</h4>
+            <h4 className="font-semibold text-xs sm:text-sm mb-1">
+              {t('meaning')} ({t('reversed')})
+            </h4>
             <ScrollArea className="h-[50px] sm:h-[70px]">
-              <p className="text-xs text-foreground/80">{isReversedDisplay}{translatedMeaningRev}</p>
+              <p className="text-xs text-foreground/80">
+                {isReversedDisplay}
+                {translatedMeaningRev}
+              </p>
             </ScrollArea>
           </div>
-          :
+        ) : (
           <div className="mt-2 p-2 sm:p-3 border rounded-md bg-background min-h-[80px] sm:min-h-[100px]">
-            <h4 className="font-semibold text-xs sm:text-sm mb-1">{isReversedDisplay}{t('meaning')} ({t('upright')})</h4>
+            <h4 className="font-semibold text-xs sm:text-sm mb-1">
+              {isReversedDisplay}
+              {t('meaning')} ({t('upright')})
+            </h4>
             <ScrollArea className="h-[50px] sm:h-[70px]">
               <p className="text-xs text-foreground/80">{translatedMeaningUp}</p>
             </ScrollArea>
           </div>
-        }
-
+        )}
 
         {showFullDetails && (
           <>
@@ -93,7 +99,9 @@ export function DrawnCardView({ drawnCardData, positionName, showFullDetails = f
               </ScrollArea>
             </div>
             {card.yesNo && (
-              <p className="text-xs sm:text-sm text-center"><strong>{t('yesNoLabel')}:</strong> {translatedYesNo}</p>
+              <p className="text-xs sm:text-sm text-center">
+                <strong>{t('yesNoLabel')}:</strong> {translatedYesNo}
+              </p>
             )}
           </>
         )}

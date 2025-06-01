@@ -1,4 +1,3 @@
-
 export interface TarotCard {
   id: number;
   name: string; // Translation Key
@@ -35,4 +34,3 @@ export interface SavedReading {
   aiInterpretation?: string;
   timestamp: number;
 }
-

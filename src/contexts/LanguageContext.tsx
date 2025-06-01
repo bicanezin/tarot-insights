@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 
@@ -27,11 +26,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('tarotAppLocale', newLocale);
   };
 
-  return (
-    <LanguageContext.Provider value={{ locale, setLocale }}>
-      {children}
-    </LanguageContext.Provider>
-  );
+  return <LanguageContext.Provider value={{ locale, setLocale }}>{children}</LanguageContext.Provider>;
 };
 
 export const useLanguage = (): LanguageContextType => {

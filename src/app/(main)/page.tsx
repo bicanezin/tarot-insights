@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTranslations } from "@/hooks/useTranslations";
-import type { TranslationKeys } from "@/hooks/useTranslations";
-import { Heart, Briefcase, TrendingUp, HelpCircle, Sparkles, Star } from "lucide-react";
-import type { Spread } from "@/types";
-import { spreads as allSpreads } from "@/constants/spreads";
-import { motion } from "framer-motion";
-import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
-import { CategorySpreads } from "@/components/CategorySpreads";
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
+import { Heart, Briefcase, TrendingUp, HelpCircle, Sparkles, Star } from 'lucide-react';
+import type { Spread } from '@/types';
+import { spreads as allSpreads } from '@/constants/spreads';
+import { motion } from 'framer-motion';
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from '@/components/ui/accordion';
+import { CategorySpreads } from '@/components/CategorySpreads';
 
-const categoryIcons: Record<Spread["category"], React.ElementType> = {
-  "Yes/No": HelpCircle,
+const categoryIcons: Record<Spread['category'], React.ElementType> = {
+  'Yes/No': HelpCircle,
   Love: Heart,
   Professional: Briefcase,
   Financial: TrendingUp,
@@ -24,7 +24,7 @@ const MotionStar = motion(Star);
 
 export default function HomePage() {
   const { t } = useTranslations();
-  const categories: Spread["category"][] = ["Yes/No", "Love", "Professional", "Financial"];
+  const categories: Spread['category'][] = ['Yes/No', 'Love', 'Professional', 'Financial'];
 
   return (
     <div className="min-h-[80vh] relative flex flex-col items-center justify-center py-12 px-4">
@@ -55,7 +55,7 @@ export default function HomePage() {
             transition={{
               duration: 3 + i,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: 'easeInOut',
               delay: i * 0.5,
             }}
           />
@@ -73,25 +73,25 @@ export default function HomePage() {
             transition={{
               duration: 4,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: 'easeInOut',
             }}
           />
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight font-serif-display flex items-center justify-center gap-3 relative">
             <MotionSparkles
               className="h-8 w-8 md:h-10 md:w-10 text-accent"
               animate={{ rotate: [0, 15, -15, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             />
-            {t("appName")}
+            {t('appName')}
             <MotionSparkles
               className="h-8 w-8 md:h-10 md:w-10 text-accent"
               animate={{ rotate: [0, -15, 15, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             />
           </h1>
         </div>
         <p className="text-xl md:text-2xl font-light relative">
-          {t("selectCategory")}
+          {t('selectCategory')}
           <motion.div
             className="absolute inset-0 -z-10 bg-accent/5 rounded-full blur-3xl"
             animate={{
@@ -101,7 +101,7 @@ export default function HomePage() {
             transition={{
               duration: 5,
               repeat: Infinity,
-              ease: "easeInOut",
+              ease: 'easeInOut',
             }}
           />
         </p>
@@ -117,16 +117,16 @@ export default function HomePage() {
           transition={{
             duration: 5,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: 'easeInOut',
           }}
         />
         <Accordion type="single" collapsible className="space-y-6">
           {categories.map((category, index) => {
             const Icon = categoryIcons[category];
             const categorySpreads = allSpreads.filter((s) => s.category === category);
-            const categoryTitleKey = `category${category.replace("/", "")}` as TranslationKeys;
+            const categoryTitleKey = `category${category.replace('/', '')}` as TranslationKeys;
             const spreadsCount = categorySpreads.length;
-            const spreadsAvailableTextKey = spreadsCount === 1 ? "spreadsAvailable_one" : "spreadsAvailable_many";
+            const spreadsAvailableTextKey = spreadsCount === 1 ? 'spreadsAvailable_one' : 'spreadsAvailable_many';
             const spreadsAvailableText = t(spreadsAvailableTextKey as TranslationKeys, { count: spreadsCount });
 
             return (
@@ -143,7 +143,10 @@ export default function HomePage() {
                   <AccordionTrigger className="w-full hover:no-underline px-6">
                     <CardHeader className="relative flex flex-row items-center justify-between space-y-0 pb-2 w-full">
                       <div className="flex items-center gap-3">
-                        <motion.div whileHover={{ scale: 1.1 }} className="p-2.5 rounded-full bg-accent/10 backdrop-blur-sm">
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          className="p-2.5 rounded-full bg-accent/10 backdrop-blur-sm"
+                        >
                           <Icon className="h-6 w-6 text-accent" />
                         </motion.div>
                         <CardTitle className="text-2xl font-serif-display">{t(categoryTitleKey)}</CardTitle>

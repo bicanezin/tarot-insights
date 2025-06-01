@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 
 import { useState, useEffect } from 'react';
 
@@ -12,7 +11,7 @@ function getStoredValue<T>(key: string, initialValue: T | (() => T)): T {
     const item = window.localStorage.getItem(key);
     // If item exists, parse it. Otherwise, use initialValue.
     // Ensure initialValue function is called if it's a function.
-    return item ? JSON.parse(item) : (initialValue instanceof Function ? initialValue() : initialValue);
+    return item ? JSON.parse(item) : initialValue instanceof Function ? initialValue() : initialValue;
   } catch (error) {
     console.warn(`Error reading localStorage key "${key}":`, error);
     // Fallback to initialValue in case of error.
@@ -23,9 +22,7 @@ function getStoredValue<T>(key: string, initialValue: T | (() => T)): T {
 export function useLocalStorage<T>(key: string, initialValue: T | (() => T)) {
   // Initialize state from localStorage or initialValue.
   // This function (the initializer for useState) runs only once on mount.
-  const [storedValue, setStoredValue] = useState<T>(() =>
-    getStoredValue(key, initialValue)
-  );
+  const [storedValue, setStoredValue] = useState<T>(() => getStoredValue(key, initialValue));
 
   // This useEffect handles:
   // 1. Initializing localStorage with initialValue if it's empty for the given key.

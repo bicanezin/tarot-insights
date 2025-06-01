@@ -1,20 +1,25 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Moon, Sun, Monitor } from "lucide-react";
-import { useTheme } from "next-themes";
+import * as React from 'react';
+import { Moon, Sun, Monitor } from 'lucide-react';
+import { useTheme } from 'next-themes';
 
-import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   const getThemeIcon = () => {
     switch (theme) {
-      case "light":
+      case 'light':
         return <Sun className="h-[1.2rem] w-[1.2rem]" />;
-      case "dark":
+      case 'dark':
         return <Moon className="h-[1.2rem] w-[1.2rem]" />;
       default:
         return <Monitor className="h-[1.2rem] w-[1.2rem]" />;
@@ -23,12 +28,12 @@ export function ThemeToggle() {
 
   const getThemeName = () => {
     switch (theme) {
-      case "light":
-        return "Claro";
-      case "dark":
-        return "Escuro";
+      case 'light':
+        return 'Claro';
+      case 'dark':
+        return 'Escuro';
       default:
-        return "Sistema";
+        return 'Sistema';
     }
   };
 
@@ -41,15 +46,15 @@ export function ThemeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")} className="flex items-center gap-2">
+        <DropdownMenuItem onClick={() => setTheme('light')} className="flex items-center gap-2">
           <Sun className="h-4 w-4" />
           <span>Claro</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")} className="flex items-center gap-2">
+        <DropdownMenuItem onClick={() => setTheme('dark')} className="flex items-center gap-2">
           <Moon className="h-4 w-4" />
           <span>Escuro</span>
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")} className="flex items-center gap-2">
+        <DropdownMenuItem onClick={() => setTheme('system')} className="flex items-center gap-2">
           <Monitor className="h-4 w-4" />
           <span>Sistema</span>
         </DropdownMenuItem>

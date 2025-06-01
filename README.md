@@ -60,6 +60,7 @@ src/
    ```
 
    Key dependencies include:
+
    - `next`
    - `next-intl`
    - `firebase` (if Firebase services are used)
@@ -79,6 +80,7 @@ src/
    This starts the Next.js development server, typically accessible at `http://localhost:3000`.
 
 2. **🌐 Accessing the App**:
+
    - Visit `/` to be redirected to the default locale (e.g., `/en`).
    - Supported locales: `en` (English), `pt` (Portuguese).
 
@@ -115,6 +117,7 @@ export const i18nConfig = {
 If you encounter a 404 error when visiting the root path (`/`), it's likely due to the middleware not redirecting to a localized path. To resolve:
 
 1. **🔍 Verify Middleware**:
+
    - Ensure `src/middleware.ts` is configured with `localeDetection: false` and a matcher like `/((?!api|_next|_vercel|.*\\..*).*)`.
    - Example:
 
@@ -136,9 +139,11 @@ If you encounter a 404 error when visiting the root path (`/`), it's likely due 
      ```
 
 2. **📂 Check File Structure**:
+
    - Ensure `src/app/[locale]/page.tsx` exists to handle localized routes.
 
 3. **🔧 Environment Issues**:
+
    - If the workspace isn't loading, try:
      - Running `Hard Restart` or `Rebuild Environment` from the command palette
      - Checking logs for Next.js dev server errors
@@ -160,6 +165,7 @@ If you encounter a 404 error when visiting the root path (`/`), it's likely due 
 ## 🚀 Deployment
 
 1. **🔥 Firebase Hosting**:
+
    - Deploy the app using the Firebase CLI:
 
      ```bash

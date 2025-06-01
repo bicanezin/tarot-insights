@@ -1,6 +1,6 @@
-"use client";
-import Image from "next/image";
-import { cn } from "@/lib/utils";
+'use client';
+import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface TarotCardImageProps {
   cardName?: string;
@@ -27,12 +27,12 @@ export function TarotCardImage({
     aiHint = imageNameHint;
   } else if (cardName) {
     const words = cardName.toLowerCase().match(/\b(\w+)\b/g) || [];
-    aiHint = words.slice(0, 2).join(" ");
+    aiHint = words.slice(0, 2).join(' ');
     if (!aiHint) {
-      aiHint = "tarot card";
+      aiHint = 'tarot card';
     }
   } else {
-    aiHint = "tarot card";
+    aiHint = 'tarot card';
   }
   aiHint = aiHint.substring(0, 50);
 
@@ -42,18 +42,18 @@ export function TarotCardImage({
   const imageSource = imageUrl || `https://placehold.co/${placeholderWidth}x${placeholderHeight}.png`;
 
   return (
-    <div className={cn("relative rounded-lg overflow-hidden shadow-lg border border-border", className)}>
+    <div className={cn('relative rounded-lg overflow-hidden shadow-lg border border-border', className)}>
       <Image
         src={imageSource}
-        alt={cardName || "Tarot Card"}
+        alt={cardName || 'Tarot Card'}
         width={width} // Used by Next/Image for aspect ratio and optimization
         height={height} // Used by Next/Image for aspect ratio and optimization
         data-ai-hint={aiHint}
         className={cn(
-          "object-contain transition-transform duration-500 ease-in-out w-full h-full",
-          isReversed ? "transform rotate-180" : ""
+          'object-contain transition-transform duration-500 ease-in-out w-full h-full',
+          isReversed ? 'transform rotate-180' : ''
         )}
-        unoptimized={!!imageUrl && !imageUrl.startsWith("https://placehold.co")} // unoptimize if it's a user-provided image that's not a placeholder
+        unoptimized={!!imageUrl && !imageUrl.startsWith('https://placehold.co')} // unoptimize if it's a user-provided image that's not a placeholder
       />
       {/* {cardName && (
         <div
@@ -70,14 +70,18 @@ export function TarotCardImage({
 }
 
 // Placeholder for card back
-export function CardBack({ className, width = 150, height = 250 }: Pick<TarotCardImageProps, "className" | "width" | "height">) {
+export function CardBack({
+  className,
+  width = 150,
+  height = 250,
+}: Pick<TarotCardImageProps, 'className' | 'width' | 'height'>) {
   const cardBackUrl =
-    "https://img.freepik.com/premium-vector/astrological-tarot-design-with-zodiac-elements-mystic-ritual-card_543062-4718.jpg";
+    'https://img.freepik.com/premium-vector/astrological-tarot-design-with-zodiac-elements-mystic-ritual-card_543062-4718.jpg';
   return (
     <div
       className={cn(
-        "relative rounded-lg overflow-hidden shadow-lg border border-primary",
-        "hover:shadow-xl transition-shadow cursor-pointer",
+        'relative rounded-lg overflow-hidden shadow-lg border border-primary',
+        'hover:shadow-xl transition-shadow cursor-pointer',
         className // This className should control width and aspect-ratio (e.g., "w-full aspect-[3/5]")
       )}
     >

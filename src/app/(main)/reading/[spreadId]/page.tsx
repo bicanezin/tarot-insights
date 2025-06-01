@@ -1,31 +1,20 @@
-"use client";
+'use client';
 
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState, useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { UserInfoForm } from "@/components/reading/UserInfoForm";
-import { SpreadDisplay } from "@/components/reading/SpreadDisplay";
-import { AIInterpretation } from "@/components/reading/AIInterpretation";
-import { getSpreadById } from "@/constants/spreads";
-import { fullTarotDeck } from "@/constants/tarotDeck";
-import type { Spread as SpreadType, TarotCard, DrawnCard, SavedReading } from "@/types";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { useTranslations } from "@/hooks/useTranslations";
-import type { TranslationKeys } from "@/hooks/useTranslations";
-import { Loader2, Save, ArrowLeft } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { UserInfoForm } from '@/components/reading/UserInfoForm';
+import { SpreadDisplay } from '@/components/reading/SpreadDisplay';
+import { AIInterpretation } from '@/components/reading/AIInterpretation';
+import { getSpreadById } from '@/constants/spreads';
+import { fullTarotDeck } from '@/constants/tarotDeck';
+import type { Spread as SpreadType, TarotCard, DrawnCard, SavedReading } from '@/types';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
+import { Loader2, Save, ArrowLeft } from 'lucide-react';
+import { Separator } from '@/components/ui/separator';
 
 // Fisher-Yates shuffle algorithm
 function shuffleDeck(deck: TarotCard[]): TarotCard[] {
@@ -45,19 +34,19 @@ export default function ReadingPage() {
   const spreadId = params.spreadId as string;
 
   const [spread, setSpread] = useState<SpreadType | null>(null);
-  const [userName, setUserName] = useState<string>("");
-  const [readingDate, setReadingDate] = useState<string>(new Date().toISOString().split("T")[0]);
-  const [customDetails, setCustomDetails] = useState<string>("");
+  const [userName, setUserName] = useState<string>('');
+  const [readingDate, setReadingDate] = useState<string>(new Date().toISOString().split('T')[0]);
+  const [customDetails, setCustomDetails] = useState<string>('');
 
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([]);
   const [currentDeck, setCurrentDeck] = useState<TarotCard[]>([]);
-  const [aiInterpretation, setAiInterpretation] = useState<string>("");
+  const [aiInterpretation, setAiInterpretation] = useState<string>('');
 
   const [isLoading, setIsLoading] = useState(true);
   const [isDrawingMode, setIsDrawingMode] = useState(false); // True when user needs to pick cards
   const [drawingForPosition, setDrawingForPosition] = useState<number | null>(null); // Index of position being drawn for
 
-  const [savedReadings, setSavedReadings] = useLocalStorage<SavedReading[]>("tarotReadings", []);
+  const [savedReadings, setSavedReadings] = useLocalStorage<SavedReading[]>('tarotReadings', []);
 
   useEffect(() => {
     const currentSpread = getSpreadById(spreadId);
@@ -68,11 +57,11 @@ export default function ReadingPage() {
       setCurrentDeck(shuffleDeck(allCards));
       setIsDrawingMode(true);
       setDrawnCards([]);
-      setAiInterpretation("");
+      setAiInterpretation('');
       setDrawingForPosition(0);
     } else {
-      toast({ title: t("errorSpreadNotFound" as TranslationKeys), variant: "destructive" });
-      router.push("/reading");
+      toast({ title: t('errorSpreadNotFound' as TranslationKeys), variant: 'destructive' });
+      router.push('/reading');
     }
     setIsLoading(false);
   }, [spreadId, router, toast, t]);
@@ -106,9 +95,13 @@ export default function ReadingPage() {
         (nextPos === drawingForPosition && drawnCards.length + 1 < spread.cardCount)
       ) {
         nextPos = (nextPos + 1) % spread.cardCount;
-        if (nextPos === drawingForPosition && drawnCards.some((dc) => dc.positionName === spread.positions[nextPos])) break;
+        if (nextPos === drawingForPosition && drawnCards.some((dc) => dc.positionName === spread.positions[nextPos]))
+          break;
       }
-      if (drawnCards.length + 1 < spread.cardCount && !drawnCards.some((dc) => dc.positionName === spread.positions[nextPos])) {
+      if (
+        drawnCards.length + 1 < spread.cardCount &&
+        !drawnCards.some((dc) => dc.positionName === spread.positions[nextPos])
+      ) {
         setDrawingForPosition(nextPos);
       } else {
         const firstAvailable = spread.positions.findIndex(
@@ -151,17 +144,17 @@ export default function ReadingPage() {
   const handleSaveReading = () => {
     if (!spread || !userName || !readingDate) {
       toast({
-        title: t("errorSavingReading" as TranslationKeys),
-        description: t("errorSavingReadingDescription" as TranslationKeys),
-        variant: "destructive",
+        title: t('errorSavingReading' as TranslationKeys),
+        description: t('errorSavingReadingDescription' as TranslationKeys),
+        variant: 'destructive',
       });
       return;
     }
     if (drawnCards.length < spread.cardCount) {
       toast({
-        title: t("errorIncompleteReading" as TranslationKeys),
-        description: t("errorIncompleteReadingDescription" as TranslationKeys),
-        variant: "destructive",
+        title: t('errorIncompleteReading' as TranslationKeys),
+        description: t('errorIncompleteReadingDescription' as TranslationKeys),
+        variant: 'destructive',
       });
       return;
     }
@@ -177,7 +170,7 @@ export default function ReadingPage() {
       timestamp: Date.now(),
     };
     setSavedReadings((prev) => [...prev, newReading]);
-    toast({ title: t("readingSaved") });
+    toast({ title: t('readingSaved') });
   };
 
   if (isLoading || !spread) {
@@ -193,10 +186,12 @@ export default function ReadingPage() {
   return (
     <div className="space-y-8">
       <Button variant="outline" onClick={() => router.back()} className="mb-4">
-        <ArrowLeft className="mr-2 h-4 w-4" /> {t("selectSpread")}
+        <ArrowLeft className="mr-2 h-4 w-4" /> {t('selectSpread')}
       </Button>
 
-      <h1 className="text-3xl font-bold tracking-tight text-center font-serif-display">{t(spread.name as TranslationKeys)}</h1>
+      <h1 className="text-3xl font-bold tracking-tight text-center font-serif-display">
+        {t(spread.name as TranslationKeys)}
+      </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-6">
@@ -216,7 +211,7 @@ export default function ReadingPage() {
 
         <div className="space-y-6">
           <div className="p-6 border rounded-lg shadow-sm bg-card">
-            <h2 className="text-xl font-semibold mb-4 font-serif-display">{t("readingSetup")}</h2>
+            <h2 className="text-xl font-semibold mb-4 font-serif-display">{t('readingSetup')}</h2>
             <UserInfoForm
               userName={userName}
               setUserName={setUserName}
@@ -241,7 +236,7 @@ export default function ReadingPage() {
 
           {drawnCards.length === spread.cardCount && (
             <Button onClick={handleSaveReading} className="w-full" size="lg">
-              <Save className="mr-2 h-4 w-4" /> {t("saveReading")}
+              <Save className="mr-2 h-4 w-4" /> {t('saveReading')}
             </Button>
           )}
         </div>

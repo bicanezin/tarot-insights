@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import type { Spread, TarotCard, DrawnCard } from "@/types";
-import { TarotCardImage, CardBack } from "@/components/shared/TarotCardImage";
-import { DrawnCardView } from "./DrawnCardView";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import { getLayoutConfig, CardPositionStyle } from "@/constants/spreadLayouts";
-import { useTranslations } from "@/hooks/useTranslations";
-import type { TranslationKeys } from "@/hooks/useTranslations";
-import { ArrowDownUp, Shuffle, Sparkles } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import type { Spread, TarotCard, DrawnCard } from '@/types';
+import { TarotCardImage, CardBack } from '@/components/shared/TarotCardImage';
+import { DrawnCardView } from './DrawnCardView';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { getLayoutConfig, CardPositionStyle } from '@/constants/spreadLayouts';
+import { useTranslations } from '@/hooks/useTranslations';
+import type { TranslationKeys } from '@/hooks/useTranslations';
+import { ArrowDownUp, Shuffle, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const MotionCard = motion(Card);
 
@@ -46,7 +46,7 @@ export function SpreadDisplay({
     return drawnCards.find((dc) => dc.positionName === spread.positions[index]);
   };
 
-  const spreadCategoryKey = `category${spread.category.replace("/", "")}` as TranslationKeys;
+  const spreadCategoryKey = `category${spread.category.replace('/', '')}` as TranslationKeys;
 
   return (
     <MotionCard
@@ -63,7 +63,7 @@ export function SpreadDisplay({
           {t(spread.name as TranslationKeys)}
         </CardTitle>
         <CardDescription className="text-base">
-          {spread.cardCount} {t("card", { count: spread.cardCount })} - {t(spreadCategoryKey)}
+          {spread.cardCount} {t('card', { count: spread.cardCount })} - {t(spreadCategoryKey)}
         </CardDescription>
       </CardHeader>
 
@@ -75,12 +75,12 @@ export function SpreadDisplay({
               className="w-full md:w-auto bg-accent hover:bg-accent/90 text-accent-foreground shadow-lg hover:shadow-xl transition-all duration-300"
               size="lg"
             >
-              <Shuffle className="mr-2 h-5 w-5" /> {t("drawCards")} ({t("shuffle")})
+              <Shuffle className="mr-2 h-5 w-5" /> {t('drawCards')} ({t('shuffle')})
             </Button>
           </motion.div>
         )}
 
-        <div className={cn("transition-all duration-500 ease-in-out relative", layoutConfig.containerClassName)}>
+        <div className={cn('transition-all duration-500 ease-in-out relative', layoutConfig.containerClassName)}>
           <AnimatePresence>
             {spread.positions.map((positionNameKey, index) => {
               const drawnCardData = getCardForPosition(index);
@@ -91,10 +91,12 @@ export function SpreadDisplay({
                   key={index}
                   style={{ gridArea: positionStyle.gridArea, ...positionStyle.style }}
                   className={cn(
-                    "flex flex-col items-center justify-start space-y-2 p-3 rounded-xl",
-                    isDrawingMode && drawingForPosition === index && "ring-2 ring-accent shadow-lg bg-accent/5",
-                    !drawnCardData && isDrawingMode && "cursor-pointer hover:bg-accent/10 hover:scale-[1.02] transition-all duration-300",
-                    "min-h-[180px] sm:min-h-[240px] md:min-h-[280px]"
+                    'flex flex-col items-center justify-start space-y-2 p-3 rounded-xl',
+                    isDrawingMode && drawingForPosition === index && 'ring-2 ring-accent shadow-lg bg-accent/5',
+                    !drawnCardData &&
+                      isDrawingMode &&
+                      'cursor-pointer hover:bg-accent/10 hover:scale-[1.02] transition-all duration-300',
+                    'min-h-[180px] sm:min-h-[240px] md:min-h-[280px]'
                   )}
                   onClick={() => !drawnCardData && isDrawingMode && onSelectPositionToDraw(index)}
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -118,7 +120,7 @@ export function SpreadDisplay({
                         initial={{ opacity: 0, rotateY: -90 }}
                         animate={{ opacity: 1, rotateY: 0 }}
                         exit={{ opacity: 0, rotateY: 90 }}
-                        transition={{ type: "spring", duration: 0.5 }}
+                        transition={{ type: 'spring', duration: 0.5 }}
                       >
                         <DrawnCardView drawnCardData={drawnCardData} positionName={positionNameKey} />
                       </motion.div>
@@ -133,9 +135,9 @@ export function SpreadDisplay({
                       >
                         <CardBack
                           className={cn(
-                            "w-full aspect-[3/5] shadow-lg hover:shadow-xl transition-all duration-300",
-                            isDrawingMode && drawingForPosition === index ? "ring-2 ring-offset-4 ring-accent" : "",
-                            isDrawingMode && !(drawingForPosition === index) ? "opacity-50" : ""
+                            'w-full aspect-[3/5] shadow-lg hover:shadow-xl transition-all duration-300',
+                            isDrawingMode && drawingForPosition === index ? 'ring-2 ring-offset-4 ring-accent' : '',
+                            isDrawingMode && !(drawingForPosition === index) ? 'opacity-50' : ''
                           )}
                         />
                       </motion.div>
@@ -158,7 +160,7 @@ export function SpreadDisplay({
             >
               <h3 className="text-xl font-serif-display mb-4 text-center flex items-center justify-center gap-2">
                 <Sparkles className="h-5 w-5 text-accent" />
-                {t("pickACardFor", { positionName: t(spread.positions[drawingForPosition] as TranslationKeys) })}
+                {t('pickACardFor', { positionName: t(spread.positions[drawingForPosition] as TranslationKeys) })}
               </h3>
               <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-accent/50 scrollbar-track-muted/25 p-4 rounded-lg bg-background/50">
                 <div className="grid grid-rows-2 auto-cols-max grid-flow-col gap-4 min-w-max">
@@ -203,7 +205,7 @@ export function SpreadDisplay({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
             >
-              {t("allCardsDrawn")}
+              {t('allCardsDrawn')}
             </motion.p>
           )}
         </AnimatePresence>

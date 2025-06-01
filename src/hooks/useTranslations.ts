@@ -1,5 +1,4 @@
-
-"use client";
+'use client';
 
 import { useCallback } from 'react'; // Added useCallback
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -13,9 +12,12 @@ export const useTranslations = () => {
   const { locale } = useLanguage();
 
   // Memoize t function, it will only change if locale changes
-  const t = useCallback((key: TranslationKeys, params?: Record<string, string | number>): string => {
-    return translateFunction(locale, key, params);
-  }, [locale]);
+  const t = useCallback(
+    (key: TranslationKeys, params?: Record<string, string | number>): string => {
+      return translateFunction(locale, key, params);
+    },
+    [locale]
+  );
 
   return { t, locale };
 };

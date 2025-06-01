@@ -24,6 +24,6 @@ export function t(locale: Locale, key: TranslationKeys, params?: Record<string, 
       translation = translation.replace(regex, String(params[paramKey]));
     });
   }
-  
+
   return translation;
 }
