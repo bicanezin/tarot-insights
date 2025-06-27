@@ -90,7 +90,7 @@ export default function HomePage() {
             />
           </h1>
         </div>
-        <p className="text-xl md:text-2xl font-light relative">
+        <div className="text-xl md:text-2xl font-light relative">
           {t("selectCategory")}
           <motion.div
             className="absolute inset-0 -z-10 bg-accent/5 rounded-full blur-3xl"
@@ -104,7 +104,7 @@ export default function HomePage() {
               ease: "easeInOut",
             }}
           />
-        </p>
+        </div>
       </div>
 
       <div className="w-full max-w-6xl relative">

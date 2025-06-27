@@ -110,6 +110,8 @@ const prompt = ai.definePrompt({
   },
 });
 
+
+
 const generateTarotReadingInterpretationFlow = ai.defineFlow(
   {
     name: 'generateTarotReadingInterpretationFlow',
@@ -119,6 +121,8 @@ const generateTarotReadingInterpretationFlow = ai.defineFlow(
   async (flowInput: TarotReadingInput) => {
     // The prompt will receive the flowInput which now includes isPortuguese
     // as set by the wrapper function generateTarotReadingInterpretation
+    console.log(prompt)
+    console.log(flowInput)
     const {output} = await prompt(flowInput);
     return output!;
   }
